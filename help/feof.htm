@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<TITLE>feof</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>feof</H2>
+
+<P>Tests for the End Of File.</P>
+
+<P><B>int feof (FILE * </B><I>stream</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns zero if the End Of File position has not been reached, non-zero (1) otherwise. -1 indicates
+an error in which case <a target="appl" href="errno.htm">errno</a> is set to <b>EINVAL</b>.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>stream</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the open FILE structure</P>
+
+<P><B>Remarks</B></P>
+
+<a target="appl" href="clearerr.htm">clearerr</a>,
+<a target="appl" href="fseek.htm">fseek</a>, <a target="appl" href="fsetpos.htm">fsetpos</a> and
+<a target="appl" href="rewind.htm">rewind</a> all reset the End Of File indicator.
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="clearerr.htm">clearerr</a>,
+<a target="appl" href="_eof.htm">_eof</a>,
+<a target="appl" href="ferror.htm">ferror</a>,
+<a target="appl" href="fseek.htm">fseek</a>,
+<a target="appl" href="fsetpos.htm">fsetpos</a>,
+<a target="appl" href="perror.htm">perror</a>,
+<a target="appl" href="rewind.htm">rewind</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

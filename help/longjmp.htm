@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>longjmp</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>longjmp</H2>
+
+<P>Performs a non-local jump.</P>
+
+<P><B>void longjmp (jmp_buf </B><I>save_jmp</I><B>, int </B><I>value</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;setjmp.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function does not return. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>save_jmp</I></P>
+
+<P>&nbsp;&nbsp;A saved state to jump-back to</P>
+
+<P><I>value</I></P>
+
+<P>&nbsp;&nbsp;The value to return to the calling setjmp function</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>longjmp</B> function restores the stack and register state saved from a previous
+call to <a target="appl" href="setjmp.htm">setjmp</a> from <I>save_jmp</I> which causes
+the flow of execution to return a second time to <a target="appl" href="setjmp.htm">setjmp</a>.
+<I>value</I> is passed to the second return of <a target="appl" href="setjmp.htm">setjmp</a>,
+except, if <I>value</I> equals 0, the value 1 is passed.</P>
+
+The thread that called <B>setjmp</B> is the only thread allowed to use the saved state.<p>
+
+<P><a target="appl" href="setjmph.htm">Set far-jump</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="setjmp.htm">setjmp</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

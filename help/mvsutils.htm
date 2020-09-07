@@ -1,0 +1,164 @@
+<html>
+<title>JCC Classes</title>
+<body>
+
+<font face="verdana,arial,helvetica" size="2">
+
+<h3><center>JCC - MVS Utilities.</center></h3>
+
+These auxiliary JCC functions can be used by programs that need to interact
+with the MVS operating system at a lower level than C normally provides.<p>
+
+<hr>
+
+In addition to the functions listed below, the <b>setjmp.h</b> header file has been updated
+to include 2 new functions:<p>
+
+<pre><code><font color="blue">int<font color="black"> _setjmp_stae (jmp_buf jbs, <font color="blue">char<font color="black"> * sdwa104);
+<font color="blue">int<font color="black"> _setjmp_canc (<font color="blue">void<font color="black">);
+</code></pre>
+
+Use "char my_sdwa [104]" as the area of memory to pass to _setjmp_stae, if you want to retrieve the ABEND data.<p>
+
+Examples of using the <b>setjmp, WTOR</b> and <b>_setstax</b> functions are provided below.<br>
+
+<hr>
+
+From the &lt;mvsutils.h&gt; header file:<p>
+
+<pre><code><font color="green">/*
+
+  MVS Utils C-Library Include File for MVS-OS/390-zOS
+
+  (C)2003,2009 Jason Paul Winter, All Rights Reserved.
+
+*/
+<font color="blue">
+#ifndef <font color="black">__MVSUTILSH<font color="blue">
+#define <font color="black">__MVSUTILSH <font color="green">/* Prevent multiple includes */
+<font color="black">
+<font color="blue">int<font color="black"> _CIB_STOP (<font color="blue">void<font color="black">); <font color="green">// Returns 1 if the CIB chain contains a STOP command
+<font color="black">
+<font color="blue">int<font color="black"> _testauth (<font color="blue">void<font color="black">); <font color="green">// Returns 1 if authorised, else 0 is returned
+<font color="blue">int<font color="black"> _modeset (<font color="blue">int<font color="black"> p);<font color="green">
+// _modeset p values:
+// ------------------
+// 0 = KEY=ZERO
+// 1 = KEY=NZERO (Use the TCB KEY)
+// 2 = SUPER
+// 3 = PROBLEM
+
+<font color="blue">int<font color="black"> _setstax (<font color="blue">long<font color="black"> * bb);        <font color="green">// "long bb [2]" is required here
+<font color="blue">int<font color="black"> _setstax_canc (<font color="blue">long<font color="black"> * bb);   <font color="green">// bb [0] == 0 on initialisation
+                                 // bb [1] is for internal use
+// If the attention key is pressed, bb [0] is incremented.
+
+<font color="blue">int<font color="black"> _putline (<font color="blue">char<font color="black"> * text); <font color="green">// Output to terminal
+<font color="blue">char<font color="black"> * _getline (<font color="blue">void<font color="black">);         <font color="green">// Input from terminal (with "edit")
+
+<font color="blue">int<font color="black"> _write2log (<font color="blue">char<font color="black"> * msg); <font color="green">// int returned is a combination of R0 & R15
+<font color="black">
+<font color="blue">int<font color="black"> _write2op  (<font color="blue">char<font color="black"> * msg); <font color="green">// msgid is returned by this function
+<font color="blue">int<font color="black"> _wri2dom   (<font color="blue">int<font color="black"> msgid);  <font color="green">// (This is used internally by _write2opr)
+<font color="black">
+<font color="blue">int<font color="black"> _write2opr (<font color="blue">char<font color="black"> * msg, <font color="blue">int<font color="black"> maxlen, <font color="blue">char<font color="black"> ** result, <font color="blue">int<font color="black"> timeout_ms);
+<font color="green">// _write2opr returns a copy of the ECB that may or may not be signalled.
+// "char * result" (address passed above) needs to be 'free'd if non-NULL
+// on return.  timeout_ms may be -1 for an infinite wait.
+
+// These are RAW access routines, not for normal use:
+<font color="blue">int<font color="black"> _wri2log (<font color="blue">void<font color="black"> * m); <font color="green">// only 126 chars, else truncated
+<font color="blue">int<font color="black"> _wri2op  (<font color="blue">void<font color="black"> * m); <font color="green">// only 125 chars, else truncated
+<font color="blue">int<font color="black"> _wri2opr (<font color="blue">void<font color="black"> * m); <font color="green">// only 121 chars, else truncated
+
+<font color="blue">#endif<font color="black">
+
+</code></pre>
+
+<hr>
+
+<b>Example WTOR usage:</b>
+
+<pre><code><font color="blue">int<font color="black"> myfunc1 () {
+    <font color="blue">int<font color="black">    i;
+    <font color="blue">char<font color="black"> * r = NULL; <font color="green">// initialise it in case WTOR fails<font color="black">
+    
+    printf (<font color="red">"Testing WTOR function\n"<font color="black">);
+    <font color="green">/*i = _write2opr ("Reply (anything)", 30, &r, -1);*/<font color="black">
+    i = _write2opr (<font color="red">"Reply (anything)"<font color="black">, 30, &r, 30000); <font color="green">// Use a 30 second timeout<font color="black">
+    printf (<font color="red">"End Testing (id=%08X)\n"<font color="black">, i);
+    <font color="blue">if<font color="black"> (r) {
+        printf (<font color="red">".reply=>%s<\n"<font color="black">, r);
+        free (r);
+    }
+    <font color="blue">return<font color="black"> (0);
+}
+</code></pre>
+
+<hr>
+
+<b>Example _setjmp_stae usage:</b> (The _setjmp_canc() function is shown in the correct place, but isn't executed by this example.)
+
+<pre><code><font color="blue">int<font color="black"> myfunc2 () {
+    <font color="blue">long<font color="black">  * a; <font color="green">// To cause an abend<font color="black">
+    <font color="blue">long<font color="black">    i;
+    jmp_buf b;
+
+    i = _setjmp_stae (b, NULL); <font color="green">// We don't want 104 bytes of abend data<font color="black">
+    <font color="blue">if<font color="black"> (i == 0) { <font color="green">// Normal return<font color="black">
+
+        printf (<font color="red">"1st setjmp return\n"<font color="black">);
+
+        a = NULL;
+        *a = 0; <font color="green">// Cause an abend!  The following 2 lines will not be executed<font color="black">
+
+        i = _setjmp_canc (); <font color="green">// Cancel the last STAE in the OS<font color="black">
+        printf (<font color="red">"setjmp_canc rc=%d\n"<font color="black">, i);
+
+    } <font color="blue">else if<font color="black"> (i == 1) { <font color="green">// Something was caught - the STAE has been cleaned up.<font color="black">
+
+        printf (<font color="red">"2nd setjmp return, abend caught\n"<font color="black">);
+
+        <font color="green">//*a = 0; // Cause an abend! (for real, if you want to test it.)<font color="black">
+
+    } <font color="blue">else<font color="black"> { <font color="green">// can only be -1 = OS failure<font color="black">
+
+        printf (<font color="red">"setjmp couldn't create STAE\n"<font color="black">);
+    }
+    <font color="blue">return<font color="black"> (0);
+}
+</code></pre>
+
+<hr>
+
+<b>Example _setstax usage:</b> (includes the new _getline and _putline routines.)
+
+<pre><code><font color="blue">int<font color="black"> myfunc3 () {
+    <font color="blue">long<font color="black"> bb [2]; <font color="green">// New for stax
+
+    <font color="black">i = _setstax (bb);
+    <font color="blue">if<font color="black"> (i == 0) {
+
+        _putline (<font color="red">"Enter something:"<font color="black">);
+        r = _getline ();
+        <font color="blue">if<font color="black"> (r) {
+            _putline (r);
+            free (r);
+        }
+
+        <font color="blue">while<font color="black"> ((bb [0])--)
+            _putline (<font color="red">"Attention detected"<font color="black">);
+
+        _setstax_canc (bb);
+
+    } <font color="blue">else<font color="black"> {
+
+        _putline (<font color="red">"STAX failed"<font color="black">);
+    }
+    <font color="blue">return<font color="black"> (0);
+}
+</code></pre>
+
+</font>
+</body>
+</html>

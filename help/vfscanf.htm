@@ -1,0 +1,63 @@
+<HTML>
+<HEAD>
+<TITLE>vfscanf</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>vfscanf</H2>
+
+<P>Formatted stream input.</P>
+
+<P><B>int vfscanf (FILE * </B><I>stream</I><B>, char * </B><I>format</I><B>, va_list </B><I>argument</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the number of fields processed. <B>EOF</B> is returned if the
+first character attempted to be read resulted in an error or the End Of File.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>stream</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the open FILE structure</P>
+
+<P><I>format</I></P>
+
+<P>&nbsp;&nbsp;Format control string</P>
+
+<P><I>argument</I></P>
+
+<P>&nbsp;&nbsp;Optional argument pointers list to accept the results</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>vfscanf</B> function reads <I>stream</I> based on the <I>format</I> string and converts
+the input into the data types described by the string.  See <a target="appl" href="scanf.htm">scanf</a>
+for more information on the <I>format</I> string and accepted arguments.</P>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="fprintf.htm">fprintf</a>,
+<a target="appl" href="fscanf.htm">fscanf</a>,
+<a target="appl" href="scanf.htm">scanf</a>,
+<a target="appl" href="sscanf.htm">sscanf</a>,
+<a target="appl" href="vfprintf.htm">vfprintf</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

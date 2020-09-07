@@ -1,0 +1,73 @@
+<HTML>
+<HEAD>
+<TITLE>gmtime</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>gmtime</H2>
+
+<P>Converts a time into a structure.</P>
+
+<P><B>struct tm * gmtime (time_t * </B><I>timer</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;time.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns a pointer to a structure representing the time. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>timer</I></P>
+
+<P>&nbsp;&nbsp;The time to convert</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>gmtime</B> function converts the <I>timer</I> value into a structure
+which contains the various parts that make up the time as follows:</P>
+
+<code><pre>struct tm {
+    int  tm_sec;    /* seconds after the minute [0-60] */
+    int  tm_min;    /* minutes after the hour [0-59] */
+    int  tm_hour;   /* hours since midnight [0-23] */
+    int  tm_mday;   /* day of the month [1-31] */
+    int  tm_mon;    /* months since January [0-11] */
+    int  tm_year;   /* years since 1900 */
+    int  tm_wday;   /* days since Sunday [0-6] */
+    int  tm_yday;   /* days since January 1 [0-365] */
+    int  tm_isdst;  /* Daylight Savings Time flag */
+    long tm_gmtoff; /* offset from CUT in seconds */
+    char *tm_zone;  /* timezone abbreviation */
+};
+
+</pre></code>
+
+<P><B>gmtime</B> and <a target="appl" href="localtime.htm">localtime</a> use the
+same internal static buffer, and the result should be copied before making calls
+to one or the other function.  The static buffer is thread-safe however.</P>
+
+<P><a target="appl" href="timeh.htm">Time</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="asctime.htm">asctime</a>,
+<a target="appl" href="ctime.htm">ctime</a>,
+<a target="appl" href="localtime.htm">localtime</a>,
+<a target="appl" href="mktime.htm">mktime</a>,
+<a target="appl" href="time.htm">time</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

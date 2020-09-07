@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>EnterCriticalSection</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>EnterCriticalSection</H2>
+
+<P>Waits for ownership of a critical section object.</P>
+
+<P><B>void EnterCriticalSection (LPCRITICAL_SECTION </B><I>lock</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;process.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>None. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>lock</I></P>
+
+<P>&nbsp;&nbsp;Pointer to a critical section object</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>EnterCriticalSection</B> function waits for the critical section pointed to by <I>lock</I> to become
+available and when it becomes available takes ownership of the critical section object.</P>
+
+<P>Care must be used with critical sections, and this function, to prevent a thread from deadlocking itself
+by waiting for a critical section it already owns.</P>
+
+<P><a target="appl" href="processh.htm">Process and Threads</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="InitialiseCriticalSection.htm">InitialiseCriticalSection</a>,
+<a target="appl" href="LeaveCriticalSection.htm">LeaveCriticalSection</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

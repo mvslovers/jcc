@@ -1,0 +1,54 @@
+<HTML>
+<HEAD>
+<TITLE>time</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>time</H2>
+
+<P>Gets the system time.</P>
+
+<P><B>time_t time (time_t * </B><I>timer</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;time.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the system time as a time_t.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>timer</I></P>
+
+<P>&nbsp;&nbsp;A pointer to where the system time may be stored</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>time</B> function stores the system time in <I>timer</I> if
+a non-<B>NULL</B> value was passed, and returns the same value in
+any case.</P>
+
+<P><a target="appl" href="timeh.htm">Time</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="asctime.htm">asctime</a>,
+<a target="appl" href="ctime.htm">ctime</a>,
+<a target="appl" href="localtime.htm">localtime</a>,
+<a target="appl" href="gmtime.htm">gmtime</a>,
+<a target="appl" href="mktime.htm">mktime</a>,
+</P>
+
+</font>
+</BODY>
+</HTML>

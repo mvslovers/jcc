@@ -1,0 +1,98 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>Sockets.</center></h2>
+
+The JCC socket interface uses the assembler EZA system functions to perform
+its work.  The source code to the JCC sockets library code is supplied
+with <b>FTP</b> as it has been in previous releases, and is not described in
+detail in this document.  The latest release of the TCPIP library components
+within JCC include support for any modern OS as well as the old library.<p>
+
+All the testing performed on the JCC sockets library was done in a modified
+Hercules emulator using a special TCP/IP instruction.<p>
+
+<b>WARNING:</b> when using sockets, INITAPI and TERMAPI are automatically
+executed when needed to ensure proper system operation.  This requires any
+worker threads (which also use sockets) to be properly terminated with
+syncthread before final program termination - to ensure TCPIP system
+resources are released.<p>
+
+Here is a list of macro's which have been implemented:<p>
+
+<pre><code>ntohl(x)
+ntohs(x)
+htonl(x)
+htons(x)
+NTOHL(x)
+NTOHS(x)
+HTONL(x)
+HTONS(x)
+FD_SET(n, p)
+FD_CLR(n, p)
+FD_ISSET(n, p)
+FD_COPY(f, t)
+FD_ZERO(p)
+</code></pre>
+
+Here is a list of functions which have been implemented:<p>
+
+<pre><code><font color=green>/* These functions are available on all platforms */</font>
+
+<font color=blue>long</font> socket       (<font color=blue>long</font> af, <font color=blue>long</font> type, <font color=blue>long</font> protocol);
+<font color=blue>long</font> bind         (<font color=blue>long</font> socket, <font color=blue>struct</font> sockaddr * name, <font color=blue>long</font> namelen);
+<font color=blue>long</font> connect      (<font color=blue>long</font> socket, <font color=blue>struct</font> sockaddr * name, <font color=blue>long</font> namelen);
+<font color=blue>long</font> listen       (<font color=blue>long</font> socket, <font color=blue>long</font> backlog);
+<font color=blue>long</font> accept       (<font color=blue>long</font> socket, <font color=blue>struct</font> sockaddr * name, <font color=blue>long</font> * pnamelen);
+<font color=blue>long</font> send         (<font color=blue>long</font> socket, <font color=blue>char</font> * buffer, <font color=blue>long</font> length, <font color=blue>long</font> flags);
+<font color=blue>long</font> recv         (<font color=blue>long</font> socket, <font color=blue>char</font> * buffer, <font color=blue>long</font> length, <font color=blue>long</font> flags);
+<font color=blue>long</font> select       (<font color=blue>long</font> socket, <font color=blue>void</font> * readfds, <font color=blue>void</font> * writefds, <font color=blue>void</font> * exceptfds, <font color=blue>void</font> * timeout);
+<font color=blue>long</font> ioctlsocket  (<font color=blue>long</font> socket, <font color=blue>long</font> command, <font color=blue>long</font> * pargument);
+<font color=blue>long</font> closesocket  (<font color=blue>long</font> socket);
+
+<font color=blue>unsigned</font> <font color=blue>long</font> inet_addr (const <font color=blue>char</font> *);
+<font color=blue>int</font>           inet_aton (const <font color=blue>char</font> *, <font color=blue>struct</font> in_addr *);
+
+<font color=green>/* These functions are available on newer machines */</font>
+
+<font color=blue>long</font> fcntl        (<font color=blue>long</font> ss, <font color=blue>int</font> command, <font color=blue>int</font> reqarg);
+<font color=blue>long</font> gethostid    ();
+<font color=blue>long</font> gethostname  (<font color=blue>int</font> namelen, <font color=blue>char</font> * name);
+<font color=blue>long</font> getpeername  (<font color=blue>long</font> socket, <font color=blue>struct</font> sockaddr * name);
+<font color=blue>long</font> getsockname  (<font color=blue>long</font> socket, <font color=blue>struct</font> sockaddr * name, <font color=blue>int</font> * pnamelen);
+<font color=blue>long</font> getsockopt   (<font color=blue>int</font> optname, <font color=blue>int</font> * optval, <font color=blue>int</font> optlen);
+<font color=blue>long</font> ioctl        (<font color=blue>long</font> socket, <font color=blue>int</font> command, <font color=blue>int</font> reqarg, <font color=blue>int</font> * retarg);
+<font color=blue>long</font> readsocket   (<font color=blue>long</font> socket, <font color=blue>void</font> * buf, <font color=blue>int</font> nbyte);
+<font color=blue>long</font> readv        (<font color=blue>long</font> socket, <font color=blue>void</font> * iov, <font color=blue>int</font> iovcnt);
+<font color=blue>long</font> recvfrom     (<font color=blue>long</font> socket, <font color=blue>void</font> * buf, <font color=blue>int</font> nbyte, <font color=blue>int</font> flags, <font color=blue>struct</font> sockaddr * name);
+<font color=blue>long</font> recvmsg      (<font color=blue>long</font> socket, <font color=blue>char</font> * msg, <font color=blue>int</font> flags);
+<font color=blue>long</font> sendmsg      (<font color=blue>long</font> socket, <font color=blue>char</font> * msg, <font color=blue>int</font> flags);
+<font color=blue>long</font> sendto       (<font color=blue>long</font> socket, <font color=blue>void</font> * buf, <font color=blue>int</font> nbyte, <font color=blue>int</font> flags, <font color=blue>struct</font> sockaddr * name);
+<font color=blue>long</font> setsockopt   (<font color=blue>long</font> socket, <font color=blue>int</font> optname, <font color=blue>int</font> * optval, <font color=blue>int</font> optlen);
+<font color=blue>long</font> shutdown     (<font color=blue>long</font> socket, <font color=blue>int</font> how);
+<font color=blue>long</font> writesocket  (<font color=blue>long</font> socket, <font color=blue>void</font> * buf, <font color=blue>int</font> nbyte);
+<font color=blue>long</font> writev       (<font color=blue>long</font> socket, <font color=blue>void</font> * iov, <font color=blue>int</font> iovcnt);
+<font color=blue>long</font> getclientid  (<font color=blue>struct</font> clientid * client);
+<font color=blue>long</font> givesocket   (<font color=blue>long</font> socket, <font color=blue>struct</font> clientid * client);
+<font color=blue>long</font> takesocket   (<font color=blue>struct</font> clientid * client, <font color=blue>long</font> socrecv);
+<font color=blue>long</font> selectex     (<font color=blue>long</font> maxsoc, fd_set * r, fd_set * w, fd_set * e, <font color=blue>void</font> * t, <font color=blue>void</font> * selecb);
+<font color=blue>long</font> getibmopt    (<font color=blue>int</font> command, <font color=blue>void</font> * buf);
+
+<font color=blue>struct</font> hostent * gethostbyname (<font color=blue>char</font> * name);
+<font color=blue>struct</font> hostent * gethostbyaddr (<font color=blue>struct</font> hostaddr * ha);
+
+<font color=green>/* These functions are made available by JCC for general use */</font>
+
+<font color=blue>long</font> ascii2ebcdic (<font color=blue>char</font> * buffer, <font color=blue>long</font> length);
+<font color=blue>long</font> ebcdic2ascii (<font color=blue>char</font> * buffer, <font color=blue>long</font> length);
+
+<font color=blue>long</font> WSAGetLastError ();
+<font color=blue>long</font> HercGetLastError ();
+</code></pre>
+
+The ioctlsocket function supports <B>FIONBIO</B> and <B>FIONREAD</B> <I>commands</I>.<p>
+
+<font>
+</body>
+</html>

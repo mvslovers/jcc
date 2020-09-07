@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>atexit</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>atexit</H2>
+
+<P>Registers a callback function to be executed when the program exits.</P>
+
+<P><B>int atexit (void (</B><I>func</I><B>)(void));</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdlib.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns zero if successful, or non-zero if the callback could not be registered. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>func</I></P>
+
+<P>&nbsp;&nbsp;The function address of the callback routine</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>atexit</B> function registers the callback function <I>func</I> to be executed when the program
+has finished execution.  Successive calls to <b>atexit</b> create a last-in-first-out queue of functions
+to be executed when the program terminates.</P>
+
+<P>The JCC library allows up to 5 functions to be registered.<p>
+
+<P><a target="appl" href="stdlibh.htm">Standard Library</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="abort.htm">abort</a>,
+<a target="appl" href="_exit.htm">_exit</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

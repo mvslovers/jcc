@@ -1,0 +1,172 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>Low Level I/O.</center></h2>
+
+These functions interface directly with the services provided to assembler
+programs within the operating system.  Unlike other C libraries, the JCC
+library buffers low level I/O at the device track level.  Like other C libraries
+the input / output is not formatted except that in text-mode fixed-block,
+padding is added to incomplete records in the form of white space.<p>
+
+In the case of HFS file access, no additional padding is written to files and
+buffering is handled directly by OMVS.<p>
+
+JCC compiled programs conditionally link the I/O routines depending on the
+use of at least one JCC I/O library function.  If the library has been combined
+with the program, the runtime automatically and silently attempts to open
+//DDN:STDIN, //DDN:STDOUT and //DDN:STDERR.  These files are accessed with the
+following predefined handles:<p>
+
+<TABLE border=1 cellpadding=5 cols=2 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=20%><B>Stream</B></TD>
+<TD width=80%><B>Handle</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>stdin</TD>
+<TD width=80%>0</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>stdout</TD>
+<TD width=80%>1</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%>stderr</TD>
+<TD width=80%>2</TD>
+</TR>
+
+</TABLE><BR>
+
+See <a target="appl" href="library.htm">JCC library</a> for information
+about changing the default DD names when the program starts.<p>
+
+Low level I/O routines set the thread-specific
+<a target="appl" href="errno.htm">errno</a> global variable when an error
+occurs.<p>
+
+<a target="appl" href="_fmode.htm">_fmode</a> may by updated to change the
+default open mode.<p>
+
+<TABLE border=1 cellpadding=5 cols=2 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=20%><B>Routine</B></TD>
+<TD width=80%><B>Use</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="__bldl.htm">__bldl</a></TD>
+<TD width=80%>Reports the files (member) block position</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_close.htm">_close</a></TD>
+<TD width=80%>Closes a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_commit.htm">_commit</a></TD>
+<TD width=80%>Commit buffers (does nothing in this implementation.)</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_dup.htm">_dup</a></TD>
+<TD width=80%>Duplicate a file handle</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_dup2.htm">_dup2</a></TD>
+<TD width=80%>Duplicate a file handle to a specific handle</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_eof.htm">_eof</a></TD>
+<TD width=80%>Tests for the End Of File</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_filelength.htm">_filelength</a></TD>
+<TD width=80%>Reports the length of a file (reads the entire file)</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="__getdcb.htm">__getdcb</a></TD>
+<TD width=80%>Returns open dataset information</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="__getdcba.htm">__getdcba</a></TD>
+<TD width=80%>Returns the address of a DCB for an open dataset</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_isatty.htm">_isatty</a></TD>
+<TD width=80%>Checks for a Terminal device</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_lseek.htm">_lseek</a></TD>
+<TD width=80%>Repositions to a location in a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="__note.htm">__note</a></TD>
+<TD width=80%>Reports the last read/written block position</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_open.htm">_open</a></TD>
+<TD width=80%>Opens a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_read.htm">_read</a></TD>
+<TD width=80%>Reads data from a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="remove.htm">remove</a></TD>
+<TD width=80%>Delete a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="rename.htm">rename</a></TD>
+<TD width=80%>Rename a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_setmode.htm">_setmode</a></TD>
+<TD width=80%>Sets the translation mode</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="__setstow.htm">__setstow</a></TD>
+<TD width=80%>Sets aux. close information for member names</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_tell.htm">_tell</a></TD>
+<TD width=80%>Returns the current file position</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_unlink.htm">_unlink</a></TD>
+<TD width=80%>Delete a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_write.htm">_write</a></TD>
+<TD width=80%>Writes data to a file</TD>
+</TR>
+
+</TABLE><BR>
+
+<font>
+</body>
+</html>

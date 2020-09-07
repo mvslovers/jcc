@@ -1,0 +1,273 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>Stream I/O.</center></h2>
+
+These routines provide formatted input and output, to the already buffered
+<a target="appl" href="ioh.htm">Low Level I/O</a> routines.<p>
+
+In addition to the predefined low level handles, the following global stream variables
+are defined:<br>stdin, stdout & stderr.<p>
+
+<a target="appl" href="_fmode.htm">_fmode</a> may by updated to change the default
+open mode.<p>
+
+
+<TABLE border=1 cellpadding=5 cols=2 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=20%><B>Routine</B></TD>
+<TD width=80%><B>Use</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="clearerr.htm">clearerr</a></TD>
+<TD width=80%>Clear error indicator for stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_fcloseall.htm">_fcloseall</a></TD>
+<TD width=80%>Closes all open streams, except stdin, stdout & stderr</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fclose.htm">fclose</a></TD>
+<TD width=80%>Closes an open stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_fdopen.htm">_fdopen</a></TD>
+<TD width=80%>Open a stream with a low level I/O handle</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="feof.htm">feof</a></TD>
+<TD width=80%>Test for the End Of File</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="ferror.htm">ferror</a></TD>
+<TD width=80%>Test for an error on a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fflush.htm">fflush</a></TD>
+<TD width=80%>Flush a streams buffers</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fgetc.htm">fgetc</a></TD>
+<TD width=80%>Get a character from a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_fgetchar.htm">_fgetchar</a></TD>
+<TD width=80%>Get a character from a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fgetpos.htm">fgetpos</a></TD>
+<TD width=80%>Save the position in a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fgets.htm">fgets</a></TD>
+<TD width=80%>Get a string from a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_filelength.htm">_filelength</a></TD>
+<TD width=80%>Calculate the length of a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_fileno.htm">_fileno</a></TD>
+<TD width=80%>Return the low level I/O handle of a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_flushall.htm">_flushall</a></TD>
+<TD width=80%>Flush all open streams</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fopen.htm">fopen</a></TD>
+<TD width=80%>Open a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fprintf.htm">fprintf</a></TD>
+<TD width=80%>Print formatted data to a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fputc.htm">fputc</a></TD>
+<TD width=80%>Output a character to a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_fputchar.htm">_fputchar</a></TD>
+<TD width=80%>Output a character to a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fputs.htm">fputs</a></TD>
+<TD width=80%>Output a string to a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fread.htm">fread</a></TD>
+<TD width=80%>Read data from a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="freopen.htm">freopen</a></TD>
+<TD width=80%>Reassign a stream, closing the old stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fscanf.htm">fscanf</a></TD>
+<TD width=80%>Formatted input from a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fseek.htm">fseek</a></TD>
+<TD width=80%>Reposition within a file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fsetpos.htm">fsetpos</a></TD>
+<TD width=80%>Reset to a presaved position in a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="ftell.htm">ftell</a></TD>
+<TD width=80%>Get the streams file position</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="fwrite.htm">fwrite</a></TD>
+<TD width=80%>Write data to a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="getc.htm">getc</a></TD>
+<TD width=80%>Get a character from stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="getchar.htm">getchar</a></TD>
+<TD width=80%>Get a character from stdin</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="gets.htm">gets</a></TD>
+<TD width=80%>Get a string from stdin</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_getw.htm">_getw</a></TD>
+<TD width=80%>Get a short integer from a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="perror.htm">perror</a></TD>
+<TD width=80%>Print an error message to stderr</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="printf.htm">printf</a></TD>
+<TD width=80%>Print a message to stdout</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="putc.htm">putc</a></TD>
+<TD width=80%>Output a character to a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="putchar.htm">putchar</a></TD>
+<TD width=80%>Output a character to a stdout</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="puts.htm">puts</a></TD>
+<TD width=80%>Output a string to a stdout</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_putw.htm">_putw</a></TD>
+<TD width=80%>Output a short integer to a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="rewind.htm">rewind</a></TD>
+<TD width=80%>Reset the stream position to the start of the file</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="scanf.htm">scanf</a></TD>
+<TD width=80%>Formatted input from stdin</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="setbuf.htm">setbuf</a></TD>
+<TD width=80%>Set the stream buffering</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="setvbuf.htm">setvbuf</a></TD>
+<TD width=80%>Set the stream buffering and buffer size</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_snprintf.htm">_snprintf</a></TD>
+<TD width=80%>Write formatted output to a string of length n</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="sprintf.htm">sprintf</a></TD>
+<TD width=80%>Write formatted output to a string</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="sscanf.htm">sscanf</a></TD>
+<TD width=80%>Formatted input from a string</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="ungetc.htm">ungetc</a></TD>
+<TD width=80%>Pushback the last character read from a stream</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="vfprintf.htm">vfprintf</a></TD>
+<TD width=80%>Formatted output to a stream, using a *list of arguments</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="vfscanf.htm">vfscanf</a></TD>
+<TD width=80%>Formatted input from a stream, using a *list of arguments</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="vprintf.htm">vprintf</a></TD>
+<TD width=80%>Formatted output to stdout, using a *list of arguments</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_vsnprintf.htm">_vsnprintf</a></TD>
+<TD width=80%>Formatted output to a string of length n, using a *list of arguments</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="vsprintf.htm">vsprintf</a></TD>
+<TD width=80%>Formatted output to a string, using a *list of arguments</TD>
+</TR>
+
+</TABLE><BR>
+
+<font>
+</body>
+</html>

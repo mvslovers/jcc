@@ -1,0 +1,56 @@
+<html>
+<title>JCC File Open Modes</title>
+<body>
+
+<h3><center>JCC - The different file-open modes available on MVS datasets.</center></h3>
+
+<table RULES=COLS border="1" CELLSPACING="0">
+<tr><td>&nbsp;</td><td bgcolor="lightgrey">fmode*</td><td>vmode*</td><td>vmode</td><td>vmode</td><td bgcolor="lightgrey">umode</td><td bgcolor="lightgrey">umode*</td></tr>
+<tr><td>&nbsp;</td><td bgcolor="lightgrey">&nbsp;</td><td>0</td><td>1</td><td>2</td><td bgcolor="lightgrey">0</td><td bgcolor="lightgrey">1</td></tr>
+
+<tr bgcolor="lightblue"><td>Binary</td>
+
+<td>Records are read as streams, including any record padding.</td>
+
+<td>The same as text-mode, newline characters are used to delimit.</td>
+<td>In-Data-Stream lengths (2 bytes) before data stream starts.</td>
+<td>Block-mode stream doesn't use lengths at all (excl. blocksize.)</td>
+
+<td>Block-mode stream doesn't use lengths at all (excl. blocksize.)</td>
+<td>In-Data-Stream lengths (2 bytes) before data stream starts.</td>
+
+</tr>
+<tr bgcolor="pink"><td>Text</td>
+
+<td>Records are trimmed and delimited by newline characters.</td>
+
+<td>Newline characters are used to delimit records into a block.</td>
+<td>Newline characters are used to delimit records into a block.</td>
+<td>Newline characters are used to delimit records into a block.</td>
+
+<td>Block-mode stream doesn't use lengths at all (excl. blocksize.)</td>
+<td>In-Data-Stream lengths (2 bytes) before data stream starts.</td>
+
+</tr>
+
+</table>
+
+* Is the default used when extern vmode/umode have not been altered<p>
+
+Note: The DCB string allowed in
+<a target="appl" href="fopen.htm">fopen</a> or
+<a target="appl" href="_open.htm">_open</a>
+may specify both a vmode= and umode= setting
+to cater for when either file types are opened.<p>
+
+These modes are for use when reading-only an old file or writing-only a new file, when using
+Read/Write mode all F/V/U blocked files become 'fixed block' (of blocksize length)
+binary type character streams, they request no trimming/translation and rounds
+up files sizes with a blocksize granuality even if only 1 byte is used in the block.<p>
+
+Read/Write supports binary and text mode but the only difference is the padding character
+used when closing the file (to fill out the incomplete current record and any remaining
+records in the block.)<p>
+
+</body>
+</html>

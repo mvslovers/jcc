@@ -1,0 +1,13 @@
+//MYJOB JOB
+//MYSTEP   EXEC PGM=EMAIL
+//STDOUT   DD   SYSOUT=*
+//SYSIN    DD   *
+127.0.0.1:25
+jasonwinter@hotmail.com
+jasonwinter@hotmail.com
+This is a test
+Testing...
+1...
+2...
+3...
+/*

@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<TITLE>frexp</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>frexp</H2>
+
+<P>Calculates the mantissa and exponent of a floating point number.</P>
+
+<P><B>double frexp (double </B><I>x</I><B>, int * </B><I>pw2</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;math.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the mantissa. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>x</I></P>
+
+<P>&nbsp;&nbsp;The value to convert</P>
+
+<P><I>pw2</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the stored exponent</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>frexp</B> function returns the mantissa of <I>x</I> such that its
+value is between 0.5 and 1.0, where <I>x</I> = mantissa * 2^<I>pw2</I> which
+is stored at the location specified by <I>pw2</I>.</P>
+
+If <i>x</I> is 0.0, then both the return value and the value stored at <I>pw2</I> is 0.0<p>
+
+<P><a target="appl" href="mathh.htm">Mathematics</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="ldexp.htm">ldexp</a>,
+<a target="appl" href="modf.htm">modf</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

@@ -1,0 +1,65 @@
+<HTML>
+<HEAD>
+<TITLE>freopen</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>freopen</H2>
+
+<P>Reassign a file pointer.</P>
+
+<P><B>FILE * freopen (char * </B><I>filename</I><B>, char * </B><I>mode</I><B>, FILE * </B><I>stream</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns a pointer to the newly open file. A null pointer value indicates an error,
+in which case the original file is closed. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>filename</I></P>
+
+<P>&nbsp;&nbsp;Filename</P>
+
+<P><I>mode</I></P>
+
+<P>&nbsp;&nbsp;Type of access permitted</P>
+
+<P><I>stream</I></P>
+
+<P>&nbsp;&nbsp;The pointer to the open FILE structure</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>freopen</B> function closes the file associated with <I>stream</I> and opens the file specified by
+<I>filename</I>, usually to redirect one of the standard files stdin, stdout or stderr.</P>
+
+See <a target="appl" href="fopen.htm">fopen</a> for more information on the open process and <I>mode</I> settings.<p>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="fclose.htm">fclose</a>,
+<a target="appl" href="_fdopen.htm">_fdopen</a>,
+<a target="appl" href="_fileno.htm">_fileno</a>,
+<a target="appl" href="fopen.htm">fopen</a>,
+<a target="appl" href="_open.htm">_open</a>,
+<a target="appl" href="_setmode.htm">_setmode</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

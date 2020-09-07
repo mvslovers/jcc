@@ -1,0 +1,120 @@
+<HTML>
+<HEAD>
+<TITLE>scanf</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>scanf</H2>
+
+<P>Formatted input from stdin.</P>
+
+<P><B>int scanf (char * </B><I>format</I> [, <I>argument</I>]<B>...);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the number of fields processed. <B>EOF</B> is returned if the
+first character attempted to be read resulted in an error or the End Of File.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>format</I></P>
+
+<P>&nbsp;&nbsp;Format control string</P>
+
+<P><I>argument</I></P>
+
+<P>&nbsp;&nbsp;Optional argument pointers to accept the results</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>scanf</B> function reads stdin based on the <I>format</I> string and converts
+the input into the data types described by the string placing their values at the locations
+specified by the optional <I>argument</I> pointers.</P>
+
+The <I>format</I> string specifes which characters are expected in the input, with some
+special cases as follows: a space specifies that one or more white-space characters are
+to follow.  The percentage sign (<B>%</B>) specifies that an argument pointer will be
+used to store a converted value from the input.  Its format is:<p>
+
+<B>%</B>[*][width][{h | hh | l | ll | L}]type<p>
+
+To specify that a percentage sign should follow in the input, specify "<B>%%</B>"<p>
+
+The optional "*" flag specifies that the next field should be scanned, but no value
+is to be assigned to an argument pointer location.<p>
+
+The width is an unsigned integer value which specifies the maximum number of characters
+to process for the next conversion.  Fewer than width characters may be processed if
+the input routine found a character which it could not convert into the current type.<p>
+
+The optional type specifiers are as follows:<p>
+
+<code><pre>
+h  = half, which results in a short integer being processed
+hh = half half, which results in a signed character being processed
+l  = long, which results in an long integer or double being processed
+ll = long long, which results in a long long integer or double being processed
+L  = long double, as that type is not supported in JCC a double is assumed.
+</pre></code>
+
+The type is the only non-optional character and can be one of the following:<p>
+
+<code><pre>
+c = the next character is stored at the assumed char * argument location
+d = the next integer is stored at the assumed int * argument location
+i = the next integer, hexadecimal or octal integer is stored as in d above
+o = the next octal integer is stored at the assumed int * argument location
+u = the next unsigned integer is stored at the assumed unsigned int * argument location
+x = the next hexadecimal value is stored at the assumed int * argument location
+e,
+E,
+f,
+g,
+G = the next floating point number is stored at the assumed float * argument location
+n = no input read,
+    the number of characters read so far is stored at the assumed int * argument location
+s = the next string is read up until white-space is detected,
+    and is stored at the assumed char * argument location
+</pre></code>
+
+As an alternative to the s type, "[" and "]" may be used to specify the allowable
+characters to use as an input string.  the value "%[a-z]", "%[a-Z]", "%[A-Z]", "%[a-9]",
+"%[A-9]" or "%[0-9]" may be used to shortcut the range of characters they imply.  They
+may also include other characters at the same time on either side of the range.  To
+specify a "-" character, ensure that it appears last before the closing bracket.  To
+specify a "]" ensure it appears first or after the "^" if the reverse effect is desired:<p>
+
+As a special case, if the first character in the "[" & "]" brackets is a "^" the effects
+are reversed - to specify a "^" character, ensure that it does not appear as the first character.<p>
+
+"%<I>n</I>c" where <I>n</I> is an unsigned decimal number, stores a string of length <I>n</I>
+without the null-terminator.<p>
+
+White-space is not skipped before input is read for any type.  Specify at least one space in the
+<i>format</I> control string before any conversion to ensure that white-space is skipped.<p>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="fscanf.htm">fscanf</a>,
+<a target="appl" href="printf.htm">printf</a>,
+<a target="appl" href="sprintf.htm">sprintf</a>,
+<a target="appl" href="sscanf.htm">sscanf</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

@@ -1,0 +1,48 @@
+<HTML>
+<HEAD>
+<TITLE>cuserid</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>cuserid</H2>
+
+<P>Returns the user id of the currently logged on user.</P>
+
+<P><B>char * cuserid (char * </B><I>buffer</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdlib.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns a pointer to the 9 character user id buffer.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>buffer</I></P>
+
+<P>&nbsp;&nbsp;A 9 character buffer to store the userid</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>cuserid</B> function copies the currently logged on users id into <I>buffer</I>.  If <I>buffer</I>
+is <b>NULL</b>, then an internal buffer is used and a pointer to that buffer is returned.</P>
+
+<P><a target="appl" href="stdlibh.htm">Standard Library</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="getlogin.htm">getlogin</a>
+</P>
+</font>
+</BODY>
+</HTML>

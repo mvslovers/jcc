@@ -1,0 +1,71 @@
+<HTML>
+<HEAD>
+<TITLE>spawn</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>spawn</H2>
+
+<P>Create a new thread and execute a new program within it using a program name.</P>
+
+<P><B>int spawn (int </B><I>mode</I><B>, char * </B><I>program</I>[, <I>arguments</I>]<B>...);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;process.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>If the mode is <B>WAIT</B> then the return value is the return code from the
+new program.  The <B>NOWAIT</B> option returns a handle to the new thread.
+-1 indicates an error.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>mode</I></P>
+
+<P>&nbsp;&nbsp;The wait mode</P>
+
+<P><I>program</I></P>
+
+<P>&nbsp;&nbsp;The program to execute</P>
+
+<P><I>arguments</I></P>
+
+<P>&nbsp;&nbsp;The <B>NULL</B> terminated argument list to pass</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>spawn</B> function starts a new thread using the
+<a target="appl" href="_beginthread.htm">_beginthread</a> function and
+optionally waits for its termination using the
+<a target="appl" href="_syncthread.htm">_syncthread</a> function.</P>
+
+The new thread executes <I>program</I> using an R1 pointer to a parameter
+list built from <I>arguments</I>.  The value before the <B>NULL</B>
+terminator has its high-bit set when passed to <I>program</I>.<p>
+
+The value of <I>mode</I> can be one of: <B>WAIT</B> or <B>NOWAIT</B>.<P>
+
+<P><a target="appl" href="processh.htm">Process and Threads</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="_beginthread.htm">_beginthread</a>,
+<a target="appl" href="_endthread.htm">_endthread</a>,
+<a target="appl" href="spawnc.htm">spawnc</a>,
+<a target="appl" href="_syncthread.htm">_syncthread</a>,
+<a target="appl" href="system.htm">system</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

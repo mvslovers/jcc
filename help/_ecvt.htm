@@ -1,0 +1,77 @@
+<HTML>
+<HEAD>
+<TITLE>_ecvt</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>_ecvt</H2>
+
+<P>Converts a double precision floating number to a string.</P>
+
+<P><B>char * _ecvt (double </B><I>value</I><B>, int </B><I>count</I><B>, int * </B><I>decimal</I><B>, int * </B><I>sign</I><B>);</B></P>
+<P><B>char * ecvt (double </B><I>value</I><B>, int </B><I>count</I><B>, int * </B><I>decimal</I><B>, int * </B><I>sign</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdlib.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>Each of these functions returns a pointer to the string representation of a number. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>value</I></P>
+
+<P>&nbsp;&nbsp;The value to be converted into a string</P>
+
+<P><I>count</I></P>
+
+<P>&nbsp;&nbsp;The number of digits to store in the string</P>
+
+<P><I>decimal</I></P>
+
+<P>&nbsp;&nbsp;The position within the string where the decimal point should go</P>
+
+<P><I>sign</I></P>
+
+<P>&nbsp;&nbsp;The sign of the value being converted</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>_ecvt</B> function converts the floating point number <I>value</I> into
+a null-terminated string of digits, using an internal thread-safe buffer.
+<a target="appl" href="_fcvt.htm">_fcvt</a> also uses the same buffer, so the strings
+value should be copied before the calling thread issues further calls to either
+function.  Only digits are stored in the string, with padding characters ('0') added
+if needed or rounding performed if the source number is longer than <I>count</I>
+digits.</P>
+
+<I>decimal</I> may be 0 or negative, when the decimal point lies to the far left of
+the returned string.  It may be greater than the length of the string if the decimal
+point lies past the far right.<p>
+
+<I>sign</I> is zero if the number being converted is positive, otherwise its value
+is non-zero.<p>
+
+<P><a target="appl" href="stdlibh.htm">Standard Library</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="atof.htm">atof</a>,
+<a target="appl" href="_fcvt.htm">_fcvt</a>,
+<a target="appl" href="_gcvt.htm">_gcvt</a>,
+<a target="appl" href="strtod.htm">strtod</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

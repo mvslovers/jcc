@@ -1,0 +1,53 @@
+<HTML>
+<HEAD>
+<TITLE>__bldl</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>__bldl</H2>
+
+<P>Reports the files (member) block position.</P>
+
+<P><B>int __bldl (int </B><I>handle</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;io.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the TTRK if the operation was successful. -1 indicates an error. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>handle</I></P>
+
+<P>&nbsp;&nbsp;The low level I/O handle to the open file</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>__bldl</B> function returns the TTRK of the opened member file.  The K value describes which
+concatenated dataset was used to open the member, where values start from 0.</P>
+
+<p>Use <a target="appl" href="_fileno.htm">_fileno</A> to get the low-level handle of a stream.</p>
+
+<p>Only files that have been specified with a (member) in read-only mode can use this function.</p>
+
+<P><a target="appl" href="ioh.htm">Low Level I/O</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="__note.htm">__note</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

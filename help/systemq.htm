@@ -1,0 +1,42 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>JCC Systemq Programs.</center></h2>
+
+The JCC command line parameter <b>-systemq</b> is the same as <b>-systemr</b> mode except
+that an additional 512 bytes of stack memory are allocated for each function entry.  This
+allows the functions to access and use some additional functions from the JCC library.<p>
+
+Since these functions have an additional memory allocation overhead, both <b>systemr</b> and
+<b>systemq</b> should be used for building programs, with only the required routines using
+the q mode.  This implies the functions are broken up into different C source files.<p>
+
+The following list describes the *additional* functions which are available in this mode
+as compared to <b>systemr</b> mode.<p>
+
+<pre><code>* means "__libc_arch" must be defined as int, 0=s370 or 1=s390
+  @div64+div64 to enable long long divides with @@DIVI64 & @@DIVU64
+  ltoa
+  itoa    (in ltoa.obj)
+  strcasecmp (in strcasec.obj, requires toupper.obj)
+  stricmp (in strcasec.obj)
+  strcspn
+  strlwr  (requires tolower.obj)
+  strncasecmp (in strncase.obj, requires toupper.obj)
+  strncmp
+  strnset
+  strpbrk
+  strrev
+  strspn
+  strspnp (in strspn.obj)
+  strstr  * (requires sstrstr.obj and fstrstr.obj)
+  strupr  (requires toupper.obj)
+</code></pre>
+
+<b>See also:</b><br>
+<a target="appl" href="systemr.htm">Systemr Mode.</a>
+
+<font>
+</body>
+</html>

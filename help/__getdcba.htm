@@ -1,0 +1,52 @@
+<HTML>
+<HEAD>
+<TITLE>__getdcba</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>__getdcba</H2>
+
+<P>Returns the address of a DCB for an open dataset.</P>
+
+<P><B>void * __getdcba (int </B><I>handle</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;io.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns an address if the operation was successful. NULL indicates an error. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>handle</I></P>
+
+<P>&nbsp;&nbsp;The low level I/O handle to the open file</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>__getdcba</B> function returns the address of a DCB for an open file to allow specific
+operations under MVS to be performed.</P>
+
+<p>Use <a target="appl" href="_fileno.htm">_fileno</A> to get the low-level handle of a stream.</p>
+
+<P><a target="appl" href="ioh.htm">Low Level I/O</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="__getdcb.htm">__getdcb</a>,
+<a target="appl" href="_open.htm">_open</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<TITLE>ungetc</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>ungetc</H2>
+
+<P>Pushes a character back into a stream.</P>
+
+<P><B>int ungetc (int </B><I>character</I><B>, FILE * </B><I>stream</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the character pushed back. <B>EOF</B> indicates an error. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>character</I></P>
+
+<P>&nbsp;&nbsp;The character to push back</P>
+
+<P><I>stream</I></P>
+
+<P>&nbsp;&nbsp;The pointer to the open FILE structure</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>ungetc</B> attempts to push back <I>character</I> into <I>stream</I>.  If the low-level buffers
+will allow a character to be returned, then the internal buffer pointers are updated.  If not, then
+the Stream routines cache the character until it is needed, in which case only one character can be pushed back.</P>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="getc.htm">getc</a>,
+<a target="appl" href="putc.htm">putc</a>
+</P>
+
+</font>
+</BODY>
+</HTML>
