@@ -103,7 +103,7 @@ long add_repl (FILE * f, char * name) {
     return (t->newname);
 };
 
-void getline (FILE * f, char * b, FILE * comments) {
+void getline_asm (FILE * f, char * b, FILE * comments) {
     long   i;
     long   cont = 0;
     char * a;
@@ -613,7 +613,7 @@ void process_files (FILE * f, FILE * fo, FILE * fn) {
     long skipwr = 0;
 
     while (1) {
-        getline (f, buf, NULL);
+        getline_asm (f, buf, NULL);
         if (buf [0]) {
             stripline (buf, label, operation, parms, &cont);
 
@@ -648,7 +648,7 @@ void process_files (FILE * f, FILE * fo, FILE * fn) {
             fprintf (fo, "%s\n", buf);
         };
         skipwr = 0;
-        getline (f, buf, fo);
+        getline_asm (f, buf, fo);
         if (buf [0]) {
             stripline (buf, label, operation, parms, &cont);
 
