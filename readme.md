@@ -1,5 +1,9 @@
 # JCC Compiler
 
+## Important Note
+
+This is a fork(-ish) from the source found on tk4- under `TK4-.JASON.JCC.ZIP` downloaded with wget: `wget ftp://her01:cul8tr@localhost:21021/TK4-.JASON.JCC.ZIP` and unzipped on linux with `unzip TK4-.JASON.JCC.ZIP`. I am not the creator nor maintainer of JCC. See LICENSE.MD for more information. 
+
 ## About
 
 JCC is an ANSI compliant C Compiler that generates '370 assembly language.
