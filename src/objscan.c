@@ -130,8 +130,8 @@ int copy (char * file, FILE * fho) {
                         memcpy (&(buf2 [1]), xsdrec, 3);
                         memset (&(buf2 [4]), 0x40, 6);          /* Blank the record */
                         memset (&(buf2 [10]), 0x00, 22);        /* Zero the record */
-                        memset (&(buf2 [32]), 0x40, 40);        /* Blank the record */
-                        memcpy (&(buf2 [72]), &(buf1 [72]), 8); /* Copy same line number 3 times */
+                        memset (&(buf2 [32]), 0x40, 48);        /* Blank the record */
+                        //memcpy (&(buf2 [72]), &(buf1 [72]), 8); /* Copy same line number 3 times */
 
                         if (buf1 [j + 8] != 1) { /* LD's don't have an ESDID */
                             ((short *)(&buf2 [14])) [0] = byteswap (esdid);
