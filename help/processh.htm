@@ -1,0 +1,127 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>Process and Threads.</center></h2>
+
+These routines facilitate the control over new processes and threads within the JCC library.<p>
+
+<b>char __subtask [9]</b> = "SUBTSKxx";  where xx is a system generated hexadecimal value, may be changed
+to a unique alphanumeric string of length 6 when one multi-threaded JCC program launches another (since
+the operating system will not allow multiply defined system symbols.)<p>
+
+<b>New</b> processing in the JCC thread library attempts to find a unique "SUBTSnxx" value by trying
+digits 0 through to 9 in position 'n', when starting a new thread fails due to a conflict.<p>
+
+<TABLE border=1 cellpadding=5 cols=2 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=20%><B>Routine</B></TD>
+<TD width=80%><B>Use</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_beginthread.htm">_beginthread</a></TD>
+<TD width=80%>Start a new thread of execution</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_endthread.htm">_endthread</a></TD>
+<TD width=80%>Signal that the current thread has finished</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="EnterCriticalSection.htm">EnterCriticalSection</a></TD>
+<TD width=80%>Wait for the availability of a critical section object</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="InitialiseCriticalSection.htm">InitialiseCriticalSection</a></TD>
+<TD width=80%>Initialise a critical section object</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="LeaveCriticalSection.htm">LeaveCriticalSection</a></TD>
+<TD width=80%>Give up ownership of a critical section object</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="Sleep.htm">Sleep</a></TD>
+<TD width=80%>Suspend execution for a specific length of time</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="CreateEvent.htm">CreateEvent</a></TD>
+<TD width=80%>Returns a handle to a new event object</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="ResetEvent.htm">ResetEvent</a></TD>
+<TD width=80%>Resets an event object to the non-signalled state</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="SetEvent.htm">SetEvent</a></TD>
+<TD width=80%>Sets an event object to the signalled state, waking sleeping subtasks</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="EventStatus.htm">EventStatus</a></TD>
+<TD width=80%>Returns the signalled state of the event</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="WaitForSingleEvent.htm">WaitForSingleEvent</a></TD>
+<TD width=80%>Suspend execution until an event is signalled</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="WaitForMultipleEvents.htm">WaitForMultipleEvents</a></TD>
+<TD width=80%>Suspend execution until multiple events are signalled</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="CloseEvent.htm">CloseEvent</a></TD>
+<TD width=80%>Deallocates the data structures used to create an event object</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="spawn.htm">spawn</a></TD>
+<TD width=80%>Run a program in a new thread, using a parameter list</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="spawnc.htm">spawnc</a></TD>
+<TD width=80%>Run a program in a new thread, using a command line</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_syncthread.htm">_syncthread</a></TD>
+<TD width=80%>Wait for a thread to finish, and release its allocated resources</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="system.htm">system</a></TD>
+<TD width=80%>Run a program in the current thread, waiting for the result</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="systemTSO.htm">systemTSO</a></TD>
+<TD width=80%>Run a program with a CPPL in the current thread, waiting for the result</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_thdpriority.htm">_threadpriority</a></TD>
+<TD width=80%>Calls the O/S <b>CHAP</b> service for a thread or program</TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=20%><a target="appl" href="_thdstatus.htm">_threadstatus</a></TD>
+<TD width=80%>Calls the O/S <b>STATUS</b> service for a thread</TD>
+</TR>
+
+</TABLE><BR>
+
+<font>
+</body>
+</html>

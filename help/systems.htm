@@ -1,0 +1,78 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>JCC Systems Programs.</center></h2>
+
+The JCC command line parameter <b>-systems</b> enables the generation of non-recursive
+functions which have self-contained (non-reentrant) local storage to enable direct
+linkage into assembler programs without the C-Run-Time library.  The object produced
+can also be used as a stand-alone program, without host assembler code.  There are many
+restrictions for programs built this way, the most obvious being the lack of IO
+support from the library.<p>
+
+The following list describes the functions which are available in this mode, note that
+the use of prelink is not allowed to resolve library objects automatically.  The nolib
+option can be used to build user specified objects into a single E/XSD object.<p>
+
+<b>!WARNING!</b> @@DIVI64 and @@DIVU64 cannot be used in systems programs.  These are
+automatically generated when <b>long long</b> variables are divided in user-code.<p>
+
+<pre><code>* means "__libc_arch" must be defined as int, 0=s370 or 1=s390
+  abs
+  bzero   *
+  bcopy   (in memmove.obj)
+  div
+  isupper \__ in ctype.obj
+  islower
+  isalpha
+  isdigit
+  isxdigit
+  isspace
+  isprint
+  isgraph
+  isblank
+  iscntrl
+  ispunct  __ end ctype.obj
+  isalnum /
+  ldiv    (in div.obj)
+  llabs   (in abs.obj)
+  longjmp (in setjmp.obj)
+  lrotl   (in rot.obj)
+  lrotr   (in rot.obj)
+  memccpy
+  memchr  *
+  memcmp  *
+  memcpy  *
+  memicmp (requires toupper.obj)
+  memmove
+  memrchr (in strrchr.obj)
+  memset  *
+  rotl    (in rot.obj)
+  rotr    (in rot.obj)
+  setjmp
+  strcat  *
+  strchr  *
+  strcmp  *
+  strcpy  *
+  strlen  *
+  strncat *
+  strncpy
+  strrchr
+  swab
+  tolower
+  toupper
+  udiv    (in div.obj)
+</code></pre>
+
+socket.c may be recompiled and used with EZASOKET in systems mode.  <b>errno</b>
+and the errno.h header file must be replaced with a non-thread aware version, and
+the <b>inet_addr</b> and <b>inet_aton</b> functions must be removed to prevent
+the use of <b>strstr</b> and <b>atol</b> which aren't supported in systems mode.<p>
+
+The full-screen terminal functions may also be used - these include memory allocation
+routines for 24 bit addressable memory.<p>
+
+<font>
+</body>
+</html>

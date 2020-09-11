@@ -1,0 +1,103 @@
+<HTML>
+<HEAD>
+<TITLE>strftime</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>strftime</H2>
+
+<P>Formats a time into a string.</P>
+
+<P><B>size_t strftime (char * </B><I>buffer</I><B>, size_t </B><I>maxlen</I><B>, char * </B><I>format</I><B>, struct tm * </B><I>timep</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;time.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the number of characters that were copied to the buffer, including the null-terminator. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>buffer</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the result buffer</P>
+
+<P><I>maxlen</I></P>
+
+<P>&nbsp;&nbsp;The maximum number of characters to store in the buffer</P>
+
+<P><I>format</I></P>
+
+<P>&nbsp;&nbsp;The string which specifies how the time is to be formatted</P>
+
+<P><I>timep</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the time structure to be converted to a string</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>strftime</B> function formats the contents of the time structure refered to by <I>timep</I>
+using the <I>format</I> string and places no more than <I>maxlen</I> characters of the result in <I>buffer</I>.</P>
+
+The function returns a partial buffer if there was not enough space to copy the entire time string.<p>
+
+The <I>format</I> string is copied into <I>buffer</I> except when a special character
+is specified, which is replaced as follows:<P>
+
+<code><pre>%a Abbreviated weekday name
+%A Full weekday name
+%b Abbreviated month name
+%B Full month name
+%c Date and time representation appropriate for timezone
+%d Day of month as decimal number (01 - 31)
+%H Hour in 24-hour format (00 - 23)
+%I Hour in 12-hour format (01 - 12)
+%j Day of year as decimal number (001 - 366)
+%m Month as decimal number (01 - 12)
+%M Minute as decimal number (00 - 59)
+%p Current timezone's A.M./P.M. indicator for 12-hour clock
+%S Second as decimal number (00 - 59)
+%U Week of year as decimal number, with Sunday as first day of week (00 - 53)
+%w Weekday as decimal number (0 - 6; Sunday is 0)
+%W Week of year as decimal number, with Monday as first day of week (00 - 53)
+%x Date representation for current timezone
+%X Time representation for current timezone
+%y Year without century, as decimal number (00 - 99)
+%Y Year with century, as decimal number
+%z, %Z Time-zone name or abbreviation; no characters if the time zone is unknown
+%% Percent sign
+</pre></code>
+
+A <B>#</B> flag may preceed any format code, but effects only some formats as follows:
+
+<code><pre>%#c long version of date and time
+%#x long version of date
+
+Numeric formats will have leading zeros removed (if any.)
+</pre></code>
+
+<P><a target="appl" href="timeh.htm">Time</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="asctime.htm">asctime</a>,
+<a target="appl" href="ctime.htm">ctime</a>,
+<a target="appl" href="localtime.htm">localtime</a>,
+<a target="appl" href="gmtime.htm">gmtime</a>,
+<a target="appl" href="mktime.htm">mktime</a>,
+<a target="appl" href="time.htm">time</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

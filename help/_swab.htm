@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>_swab</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>_swab</H2>
+
+<P>Copies and swaps bytes in a buffer.</P>
+
+<P><B>void _swab (char * </B><I>source</I><B>, char * </B><I>dest</I><B>, int </B><I>count</I><B>);</B></P>
+<P><B>void swab (char * </B><I>source</I><B>, char * </B><I>dest</I><B>, int </B><I>count</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;string.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>None.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>source</I></P>
+
+<P>&nbsp;&nbsp;The source buffer</P>
+
+<P><I>dest</I></P>
+
+<P>&nbsp;&nbsp;The destination buffer</P>
+
+<P><I>count</I></P>
+
+<P>&nbsp;&nbsp;The number of bytes in the buffers</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>_swab</B> function copies bytes from <I>source</I> to <I>dest</I> swapping
+even-odd pairs for transfer to machines with a different byte order.</P>
+
+<P><a target="appl" href="stringh.htm">String</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="memcpy.htm">memcpy</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

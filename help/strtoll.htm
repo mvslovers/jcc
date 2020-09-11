@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE>strtoll</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>strtoll</H2>
+
+<P>Converts a string to a long long integer.</P>
+
+<P><B>long long strtoll (char * </B><I>string</I><B>, char ** </B><I>endptr</I><B>, int </B><I>base</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdlib.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the long long integer representation of string. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>string</I></P>
+
+<P>&nbsp;&nbsp;The string to be converted to a long long integer</P>
+
+<P><I>endptr</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the character which stops the scan</P>
+
+<P><I>base</I></P>
+
+<P>&nbsp;&nbsp;The base of the number being converted</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>strtoll</B> function converts <I>string</I> to a long long integer number, where the conversion
+stops at the first character that is not recognisable as a number in the form:</P>
+
+<p>[<i>whitespace</i>][<i>sign</i>][<i>digits</i>]<p>
+
+<P><a target="appl" href="stdlibh.htm">Standard Library</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="atoi.htm">atoi</a>,
+<a target="appl" href="atol.htm">atol</a>,
+<a target="appl" href="strtol.htm">strtol</a>,
+<a target="appl" href="strtoul.htm">strtoul</a>,
+<a target="appl" href="strtoull.htm">strtoull</a>,
+<a target="appl" href="strtod.htm">strtod</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

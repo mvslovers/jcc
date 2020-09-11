@@ -1,0 +1,159 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>3270 Designer.</center></h2>
+
+The 3270 Designer is a C code generating program written in Visual Basic which allows
+simple screen editing to build complex panels for use within TSO.<p>
+
+The interface to the 3270 Designer is quite simple.  Just place the cursor where you
+want to write text, and type the text you want.  Options allow for input/output
+variables, output-only variables, changing colours & attributes and a special vertical
+label generator.<p>
+
+A line of text may be moved by using the mouse to select the text and pressing the move
+button followed by the cursor keys.  <b>Note:</b> this may also move text which isn't
+selected when space doesn't exist for the text which is selected and is being moved.
+Also, the attribute byte is recalculated on every move and may result in the
+end-character being lost in the selected text to preserve screen colours etc.<p>
+
+This program isn't fast!  It is, after all, written in Visual Basic...  Calculations
+for each character entered are performed to allow the screen to show what a real 3270
+screen will use - the generation speed and time saved in coding a 3270 screen from
+scratch is quite good however.<p>
+
+The filename of the <b>.D37</b> designer save-file is used as the filename and function
+name of the generated program.  In the example this is called <b>test1.D37</b>, <b>test1.h</b>
+and <b>test1 ();</b>  Refer to the example for more information on using the generated code.
+From the example it can be seen that a return code from 1-24 is a function key value and 0 is
+the &lt;enter&gt; key.  -1 indicates an error.<p>
+
+Refer also to the <b>readme.txt</b> file in the <b>src\3270</b> directory for more
+information.<p>
+
+<hr>
+
+<small>
+In the example.c program, it may not be clear that the order of variables passed to the
+generated function (ie. within the two arrays) is based on left-to-right top-to-bottom
+order of the fields placed on the 3270 screen.
+</small>
+
+<hr><br>
+
+As an enhancement to the JCC library, a program can now use the socket library to allow
+a new 3270 terminal to connect and display 3270 designer panels.  Up to 256 connections
+are supported per JCC program (the thread limit in JCC) but multiple JCC programs can
+be started using the spawn system function if more are needed.  Each different program
+would need to use a different socket server-port however due to TCP/IP requirements.<p>
+
+The main idea here is that a program being used as a started task can create a thread that
+allows a 3270 terminal to connect and configure the started task settings while it is running.
+In this instance only 1 socket connection would be needed.  See example2.c for more info.<p>
+
+This is the aux3270.h include file from the JCC library:
+
+<pre><code><font color="green">/*
+
+  Auxiliary 3270 C-Library Include File for MVS-OS/390-zOS
+
+  (C)2009 Jason Paul Winter, All Rights Reserved.
+
+*/
+
+<font color="blue">#ifndef<font color="black"> __AUX3270H
+<font color="blue">#define<font color="black"> __AUX3270H <font color="green">/* Prevent multiple includes */
+
+/* "#define NOAUX3270 1" to use only the original routines [which are now part */
+/* of the aux3270.obj library member, ie. No longer pre-link the TSO .obj code] */
+/* before including this file.  That is the same as the old 3270 designer code. */
+
+<font color="blue">#define<font color="black"> THIS_THREAD -1
+<font color="green">/* This can be used as threadid in SetNative below: */
+
+<font color="blue">int<font color="black"> SetNative (<font color="blue">int<font color="black"> threadid, <font color="blue">int<font color="black"> value);
+<font color="green">/* SetNative selects which thread of a JCC program is
+   selected to use the TSO terminal IO methods instead
+   of going through the emulated terminal IO routines.
+
+   When this module is linked, the default is no TSO.
+ 
+   threadid may be 0 for the main program, or the handle
+   value returned from _beginthread - but note that you
+   must control access (using a critical section) to all
+   emulated IO functions between TERM-ON and OFF before
+   this function is used.  Once connected, -1 is returned
+   if this function is called for the connected thread.
+
+   A 'value' of 0 turns off the TSO option for a thread.
+ */
+
+<font color="blue">extern int<font color="black"> panel_port;    <font color="green">/* '3278' is the default port to listen on */
+
+<font color="blue">extern int<font color="black"> panel_running; <font color="green">/* Set to 0 to shutdown right away, OR */ 
+                          /* Set to 2 to shutdown once users have logged off */
+
+<font color="green">/* New re-routing functions for terminal IO: */
+
+<font color="blue">long<font color="black"> MYTERMONi (<font color="blue">void<font color="black">);   <font color="green">/* Will wait until a 3270 client connects */
+<font color="blue">long<font color="black"> MYTERMFFi (<font color="blue">void<font color="black">);   <font color="green">/* Cleans up / disconnects a client */
+<font color="blue">long<font color="black"> MYTERMOi  (<font color="blue">void<font color="black"> *); <font color="green">/* Sends 3270 stream output */
+<font color="blue">long<font color="black"> MYTERMIi  (<font color="blue">void<font color="black"> *); <font color="green">/* Reads 3270 stream input */
+
+<font color="green">/* Use these short (original) assembler routines now provided by JCC: */
+
+<font color="blue">long<font color="black"> MYTERMON (<font color="blue">void<font color="black">);
+<font color="blue">long<font color="black"> MYTERMFF (<font color="blue">void<font color="black">);
+<font color="blue">long<font color="black"> MYTERMO  (<font color="blue">void<font color="black"> *);
+<font color="blue">long<font color="black"> MYTERMI  (<font color="blue">void<font color="black"> *);
+
+<font color="blue">#ifndef<font color="black"> NOAUX3270
+
+<font color="green">/* Alter the original 3270 designer API commands to use the new ones available: */
+
+<font color="blue">#define<font color="black"> MYTERMON MYTERMONi
+<font color="blue">#define<font color="black"> MYTERMFF MYTERMFFi
+<font color="blue">#define<font color="black"> MYTERMO  MYTERMOi
+<font color="blue">#define<font color="black"> MYTERMI  MYTERMIi
+
+<font color="blue">#endif
+
+<font color="green">/* JCC 3270-stream helper macros */
+
+/* Macros to set properties */
+<font color="blue">#define<font color="black"> attr_init(a) memset (a, 0x00, <font color="blue">sizeof<font color="black"> (a)); <font color="green">/* Use defaults */
+<font color="blue">#define<font color="black"> attr_color(a, c) a [0] = c
+<font color="blue">#define<font color="black"> attr_colour(a, c) a [0] = c
+<font color="blue">#define<font color="black"> attr_style(a, c) a [1] = c
+<font color="blue">#define<font color="black"> attr_protect(a, c) a [2] = c <font color="green">/* Only for in/out's */
+
+/* Colour values */
+<font color="blue">#define<font color="black"> attr_c_default    0x00
+<font color="blue">#define<font color="black"> attr_c_bwhite     0xF7
+<font color="blue">#define<font color="black"> attr_c_bcyan      0xF5
+<font color="blue">#define<font color="black"> attr_c_byellow    0xF6
+<font color="blue">#define<font color="black"> attr_c_bgreen     0xF4
+<font color="blue">#define<font color="black"> attr_c_bpurple    0xF3
+<font color="blue">#define<font color="black"> attr_c_bred       0xF2
+<font color="blue">#define<font color="black"> attr_c_bblue      0xF1
+
+<font color="green">/* Style values */
+<font color="blue">#define<font color="black"> attr_s_default    0x00
+<font color="blue">#define<font color="black"> attr_s_normal     0xF0
+<font color="blue">#define<font color="black"> attr_s_underscore 0xF4
+<font color="blue">#define<font color="black"> attr_s_blink      0xF1
+<font color="blue">#define<font color="black"> attr_s_reverse    0xF2
+
+<font color="green">/* Protection values */
+<font color="blue">#define<font color="black"> attr_p_default    0x00
+<font color="blue">#define<font color="black"> attr_p_unprotect  0x00
+<font color="blue">#define<font color="black"> attr_p_protected  0x01
+
+<font color="blue">#endif<font color="black">
+
+</code></pre>
+
+<font>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>_threadstatus</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>_threadstatus</H2>
+
+<P>Sets the threads dispatchability status.</P>
+
+<P><B>int _threadstatus (int </B><I>handle</I><B>, int </B><I>mode</I><B>);</B></P>
+<P><B>int threadstatus (int </B><I>handle</I><B>, int </B><I>mode</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;process.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>0 is success, 4 is an O/S specific error.  -1 indicates a JCC error.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>handle</I></P>
+
+<P>&nbsp;&nbsp;The handle returned from <a target="appl" href="_beginthread.htm">_beginthread</a></P>
+
+<P><I>mode</I></P>
+
+<P>&nbsp;&nbsp;The mode to set: 0 is STOP and 1 is START.</a></P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>_threadstatus</B> function schedules a thread to start or stop based on
+operating system limits.  This function may return before the requested thread is stopped.
+The primary thread (0) cannot have its status changed.</P>
+
+<P><a target="appl" href="processh.htm">Process and Threads</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="_endthread.htm">_endthread</a>,
+<a target="appl" href="_beginthread.htm">_beginthread</a>,
+<a target="appl" href="_syncthread.htm">_syncthread</a>,
+<a target="appl" href="_thdpriority.htm">_threadpriority</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

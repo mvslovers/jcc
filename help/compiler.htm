@@ -1,0 +1,127 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>JCC Compiler.</center></h2>
+
+The JCC Compiler is an ANSI compliant C compiler which produces '370 assembler listings that
+are ready to assemble with modern mainframe assemblers.  See the
+<a target="appl" href="startpg.htm">JCC Help</a> page for information on using older style
+assemblers and linkers (eg. MVS3.8j)<p>
+
+The use of option -o, -obj or -object engages an internal assembler to produce XSD objects which
+should be the same as those produced by the <b>IFOX00</b> assembler, except with ESD records
+split into XSD - longer-name records.  Line numbers processed by
+<a target="appl" href="startpg.htm">objscan</a>
+are never resequenced, where the internal assembler produces sequenced line numbers.  XSD ordering
+may be slightly different when the int64 divide is used, which appears last in XSD internal format.<p>
+
+The command line argument <b>-fstk</b> generates faster function entry code which bypasses the
+check for Stack faults (there is a 4K Stack guard, which may be used by any function with only
+small stack-frame requirements.)<p>
+
+The JCC-Library Include files must be made available to JCC when a source program is compiled
+which uses the library functions. Specify this by using the "-I" option.  The current source
+directory does not need to be specified for included user files.<p>
+
+<pre><code>jcc [option|file]...
+-A            warn about Non-ANSI usage; 2nd -A : higher sensitivity
+-class=file.h produces a header file for external 'class' variable access
+-Dname
+-Dname=def    define the preprocessor symbol `name'
+-fstk         changes the function entry to skip stack fault checks
+-fcode=name   replaces the CSECT generated symbol with `name'
+-help or -?   print this message on standard error
+-Idir         add `dir' to the list of #include directories
+-list=file    turns on address/listing when object production is in use
+-list2=file   turns on address/listing for obj-prod. for rent areas
+-nobuiltins   suppresses generation of inline library routines
+-o-obj-object generate an object deck instead of assembler source
+-r-rent       generate reentrant object deck for prelink
+-renteprl     generate extended prologue for DLLs (see compiler.htm help.)
+-systems      generate non-recursive systems function entries
+-systemr      generate reentrant systems function entries
+-systemq      generate reentrant systems function entries + 512b stack
+-tempdir=dir  place temporary files in `dir/'
+-test=file    generates debugging code + symbol table appended to 'file'
+-Uname        undefine the preprocessor symbol `name'
+-w            suppress warnings
+</code></pre>
+
+<b>-renteprl</b> (Reentrant Extended Prologue) switches on -r mode and also ensures there is enough
+space in each reentrant prologue for the dynamic loader to replace a 'B'-ranch with some logic to
+access 16 Megabytes instead of 4KB in the run-time rent-table.  This extends DLL loading from a limit
+of 1023 (1 is used for CRT variables) to ((2^24)/4) = 4 million loaded modules.<p>
+
+<b><a target="appl" href="library.htm">__jcc_rtab_size</a></b> is an allowed external (defined in
+assembler or alone in a non-rent jcc C stub) that controls how many slots are available at run-time.
+The amount of memory consumed by this table is 4 multiplied by the rent-table-size, and can be up to
+16MB if resources are available.  Each new thread also gets its own copy of this table.<p>
+
+<b>Note:</b> It is possible to load a dynamic module twice or more times.  There are two ways to do
+this: 1/ Use the library's dynamic loader, and each time the object is loaded record the addresses needed in
+different variables for each instance.  2/ Use the JCC Class-Object interface which loads only one
+code section but allows a push/pop stack to control which instance is currently 'set' for the code to
+use.<p>
+
+<b>__STDC__</b> (=1) and <b>JCC</b> are predefined precompiler symbols.<p>
+
+The <b>FTP</b> objects <b>previously</b> included with JCC were compiled with the option <b>-z28000</b> which changes
+the default code-page limit (which has a default of 4000) up by a factor of 7.  The code generator
+estimates when a new code-page is required by using the worst-case number of assembler instructions,
+which would only happen with the largest of programs and, if it had no optimisations applied.  This is
+never the case with JCC, but the default assures every program will assemble without reference errors.
+To gain a slight speed increase (of around 2%) the -z option may be applied with values which still
+allow the program to be assembled without errors.<p>
+
+<hr>
+
+<u>Built~In Library Functions</u><p>
+
+The following library functions are generated 'inline' by default:<p>
+
+<pre><code>bzero, memchr, memcmp, memcpy, memset, strcpy, strlen, strncmp, strncpy.</code></pre>
+
+If the external library routines are desired, then use the -nobuiltins compiler option.<p>
+
+<hr>
+
+<u>Types</u>
+<pre><code>char      1 byte  : aligned on byte boundaries, is by default unsigned char
+short     2 bytes : aligned on 2 byte boundaries
+int       4 bytes : aligned on 4 byte boundaries
+long      4 bytes : aligned on 4 byte boundaries
+long long 8 bytes : aligned on 4 byte boundaries
+
+float     4 bytes : aligned on 4 byte boundaries, are HFP format
+double    8 bytes : aligned on 4 byte boundaries, are HFP format
+
+long double = double
+
+bit-fields are allocated left to right, be careful with single bit signed fields
+enumerations are signed int
+
+pointers  4 bytes : aligned on 4 byte boundaries
+</code></pre>
+
+<u>Return Values</u>
+<pre><code>Intergral values are returned in R15, and promoted if needed with sign extended
+long long is returned in R15 and R0, msb in R15
+
+floating point values are returned in FP0, float is promoted to double
+
+structures are returned via an inserted initial parameter, with space allocated
+by the calling function
+</code></pre>
+
+<hr>
+
+<small>
+Info: some assemblers are known to generate incorrect floating point representations of numbers
+with a negative exponent (n.nE-n) and the assembler should be checked once, before running JCC
+programs.
+</small>
+
+<font>
+</body>
+</html>

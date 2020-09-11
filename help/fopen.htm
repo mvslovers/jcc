@@ -1,0 +1,207 @@
+<HTML>
+<HEAD>
+<TITLE>fopen</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>fopen</H2>
+
+<P>Open a file.</P>
+
+<P><B>FILE * fopen (char * </B><I>filename</I><B>, char * </B><I>mode</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns a pointer to the open file. A null pointer value indicates an error. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>filename</I></P>
+
+<P>&nbsp;&nbsp;Filename</P>
+
+<P><I>mode</I></P>
+
+<P>&nbsp;&nbsp;Type of access desired</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>fopen</B> function opens the file specified by <I>filename</I>.</P>
+
+<P>The character string <I>mode</I> specifies the requested access for the file, as follows:</P>
+
+<P><B>"r"</B>&nbsp;&nbsp;Opens for reading. If the file does not exist or cannot be found, the <B>fopen</B> call fails.</P>
+
+<P><B>"w"</B>&nbsp;&nbsp;Opens a file for writing.  If the given file exists, its contents are destroyed.</P>
+
+<P><B>"a"</B>&nbsp;&nbsp;Opens a file for appending.  (<a target="appl" href="ftell.htm">ftell</a> does not properly reflect
+the old/new data locations, only the newly added data effects the file-pointer.  a+ and a+b modes works differently.)</P>
+
+<P><B>"r+"</B> no truncate, location=start-of-file, pds member datasets must exist.</P>
+<P><B>"w+"</B> truncate, location=start-of-file.</P>
+<P><B>"a+"</B> no truncate, location=end-of-file, always writes to end-of-file even after a seek.</P>
+
+<P><B>"r+b"</B> no truncate, location=start-of-file, pds member datasets must exist.</P>
+<P><B>"w+b"</B> truncate, location=start-of-file.</P>
+<P><B>"a+b"</B> no truncate, location=end-of-file, always writes to end-of-file even after a seek.</P>
+
+<P>&nbsp;&nbsp;The JCC library now supports creating a new dataset which is used in read/write mode.  As the
+file blocks are written, the internal buffers record seek-information to allow update-in-place operations to modify the
+previously written data.  There is a small overhead in allocating the buffers to record the seek-information, and
+larger block sizes should be used when possible.  In the '+' mode, every block written will be the same length and
+there are no record delimiters used in the datastream.  This makes read/write files more suitable for temporary page-files
+rather than true output-files.  VB datasets must use a lrecl of blksize-4 for read/write mode to operate properly without
+open failing.  F, FB and U datasets have no special issues other than fixed-block file-lengths.<p>
+
+A member cannot be extended (only updated-in-place) after the initial file-close, a+ / a+b mode isn't supported for member create
+or read only operations with open failing.  Always use w+ / w+b to create new members, any mode can create a sequential dataset.<p>
+
+Opening and writing to files with short-blocks (those created by the <b>non</b> '+' modes and most other software) should be
+avoided as part of the buffer may not commit to disk with the larger block-size at update-time.<p>
+
+A terminal device may be opened twice, at the same time, once in each mode of read and write.<p>
+
+<P><B>"t"</B></P>
+
+<P>&nbsp;&nbsp;Opens the file in text mode, which will pad fixed records with spaces if an incomplete record
+is written (delimited by a newline.)  In <b>HFS</b>, variable or undefined length file types, text mode is the same as
+binary mode (by a default but changable setting in the case of datasets.)</P>
+
+<P><B>"b"</B></P>
+
+<P>&nbsp;&nbsp;Opens the file in binary mode, which is untranslated by the JCC library in fixed record length file
+types.  In variable length record file types, a newline character is always added to / represents the end of each
+record.  The actual file content never includes a newline, the library inserts / removes the character when required.<p>
+
+When incomplete records are written in binary mode, to fixed record file types, zeros are used to pad the records.<p>
+
+When the file type is undefined, a short integer (two byte) number should be passed to the write function, in the
+form of data, to inform the library of the desired size of the record to be written.  Likewise, when an undefined
+file type is read, a similar two byte identifier preceeds the data returned by the JCC library.  The bytes need not be
+passed in the same function call, but must be sequentially ordered.<p>
+
+<b>extern int _vmode;</b> may be defined and set to value 1 to enable V[B] file types to use and return
+the same half-word length in the data stream (like Undefined-record processing) to allow newlines and other binary
+information to be physically read and written.  Only Binary non-translated mode opened files check <b>_vmode</b>.
+File positioning using seek is effected by the <b>_vmode</b> setting.  A value of 2 will prevent newlines
+from being added or used as record boundaries.<p>
+
+<b>extern int _umode;</b> may be defined and set to a zero value so U file types do not require or return a length
+indicator for records.  Each record written will be the maximum blocksize, except the last which can be smaller.<p>
+
+See <a target="appl" href="filemodes.htm">file modes</a> for more detailed information.<p>
+
+As an extension to the ANSI C library, any part of ",recfm=u|f[b]|v[b],blksize=x,lrecl=y,klen=z" may be appended to
+the <I>mode</I> to provide defaults for the dataset when those values are not obtainable from the system.  Note that
+these values will only be used (by an open exit) when the blocksize of a file type is not returned by the system.
+To force these values into the DCB before the open service is issued, use an extra string component: ",force".  Note
+that <b>HFS</b> file access does not use any additional <i>mode</i> attributes.<p>
+
+A VTOC can be opened by specifying ",vtoc" where the disk accessed is that where the DD or DSN is located.  If no
+<I>filename</I> is specified, ie. an empty string, extra components "volser=..." and "unit=..." need to be added to
+locate the desired disk.  Only the 96 non-key bytes from each vtoc entry are read by JCC.  The open mode must be
+set to read binary for the function to succeed.<p>
+
+The <i>mode</i> string can also specify ",vmode=0|1|2" and/or ",umode=0|1" to localise the effect on file-processing.<p>
+
+The <I>filename</I> may be preceeded by a style ("//DDN:", "//DSN:" or "//HFS:") to specify which library routines should
+be used to access the file.  A filename starting with a single "/" is assumed to be <b>HFS</b>.<p>
+
+<b>_style</b>, described in the <a target="appl" href="library.htm">JCC Library</a>, determines the default file
+style for opening files.  This is a character pointer which by default points to "//DDN:" and which may be altered
+to point to a user defined string specifying "//DSN:" or "//HFS:" if that default style is desired.
+<b>extern char * _style;</b> needs to be defined before doing this.<p>
+
+When a PS (memberless) DSN style dataset is to be opened, the following <i>mode</i> values may also be used:<p>
+
+<code><pre>"volser=vvvvvv,unit=uuuuuu,pri=mmm,sec=nnn,rlse"
+</pre></code>
+
+Which specify the placement and size of a newly created PS dataset.  These values are only used when the dataset
+doesn't already exist, <i>volser</i>, <i>sec</i> and <i>rlse</i> are optional - both <i>recfm</i> and <i>blksize</i> must be
+specified to create a new dataset.  Space is allocated in track (TRK) units.<p>
+
+<b>New</b> open processing allows uncatalogued files to be opened by using both volser= and unit= values and the new
+",notcat" value.  The file will not be found/opened if it does not exist on the volume specified, even if it is
+catalogued.  There is also a new value ",dontcat" which prevents newly created datasets from being catalogued.<p>
+
+A PDS can be created by additionally specifying the value ",dirblks=" with your desired value.  Although write binary
+must be issued for the creation to take place, the actual resulting file is finally opened in read binary ready to
+allow listing the empty PDS directory.  You cannot open a PDS in write mode without a member name.<p>
+
+DSN filenames starting with "&&" are created when opened for the first time, and deleted when the JCC compiled
+program ends.  1000 temporary files may be created in this way per JCC program, although only 256 files may
+be open at the same time.  Once a "//DSN:&&DSNAME" temporary file has been created, it may be opened and closed
+as many times as needed by the running program.  Unlike JCL, use the same filename to (re)access the same temporary
+file.<p>
+
+To use a temporary file with another program in the same address-space, you may obtain the internal DD name
+used for the temp file with the int __get_tmpddn (char * tmpnam, char * ddn9) function.  tmpnam would be "&&DSNAME"
+and ddn9 would be your char array (of length 9) to accept the resulting unpadded null-terminated ddname string.  The
+function returns 1 when a name was copied into your buffer, and 0 on failure to locate the file.<p>
+
+For streams, a special file type "//NULLFILE" may be used to create a dummy file which does nothing.  This file
+type is used by stdin, stdout or stderr when no other file can be opened in its place.  However stderr will try to
+use the same file as stdout, if stdout can be opened as a real file and stderr cannot.<p>
+
+The <b>DD, DSN, Member and Volume-Serial</b> names of any open JCC dataset can be obtained by using the special
+function:<p>
+
+<code><pre>int __get_ddndsnmemb (int handle, char * ddn, char * dsn,
+                     char * member, char * serial, unsigned char * flags);
+</pre></code>
+
+Where member will be set to an empty string if the file is sequential.  If the device is a terminal, serial will also
+be set to an empty string and dsn will be set to "TERMFILE".  You may pass NULL for any of the (u)char * parameters if
+you are not interested in that particular value.  Space must exist in your buffers for returning the longest possible
+results for each value, plus a null terminator.  That's 9, 45, 9 and 7 bytes for the first 4 parameters respectively.
+The flags returned need an 11 byte area and include the following information from the JFCB:<p>
+
+TSDM : Offset 0, 1 byte.<br>
+IND1/2 : Offset 1, 2 bytes.<br>
+KEYLEN : Offset 3, 1 byte.<br>
+DSORG : Offset 4, 2 bytes.<br>
+RECFM : Offset 6, 1 byte.<br>
+BLKSIZE: Offset 7, 2 bytes.<br>
+LRECL: Offset 9, 2 bytes.<p>
+
+A return value of -1 indicates an error prevented any values from being returned, 0 indicates successful execution.
+<b>HFS</b> files are not supported.  <b>Hint:</b> Use the fileno function to obtain a handle from a stream to use with
+this function.<p>
+
+Memory files are now supported by the JCC library.  Use a style or prefix of //MEM: to create a new or access an existing memory
+file.  Note that only the current JCC program will have access to a memory file, you cannot access a memory file created within
+one JCC program from another JCC program even if the second JCC program was executed by the first.  You cannot remove, unlink or
+rename a memory file once it is created.  You can however release all memory used by a memory file by reopening it with the
+O_TRUNC parameter flag.  Only standard heap memory can be used for memory files in JCC.  Text mode has no meaning for memory files
+in the JCC library and access is always read/write regardless of what is specified in the open flags.<p>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="_fcloseall.htm">_fcloseall</a>,
+<a target="appl" href="fclose.htm">fclose</a>,
+<a target="appl" href="_fdopen.htm">_fdopen</a>,
+<a target="appl" href="ferror.htm">ferror</a>,
+<a target="appl" href="_fileno.htm">_fileno</a>,
+<a target="appl" href="freopen.htm">freopen</a>,
+<a target="appl" href="_open.htm">_open</a>,
+<a target="appl" href="_setmode.htm">_setmode</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

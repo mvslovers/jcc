@@ -1,0 +1,64 @@
+<HTML>
+<HEAD>
+<TITLE>fflush</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>fflush</H2>
+
+<P>Flushes the buffer to disk.</P>
+
+<P><B>int fflush (FILE * </B><I>stream</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns zero if the file was successfully flushed. A non-zero value indicates an error. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>stream</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the open FILE structure</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>fflush</B> function does nothing when <I>stream</I> is in write mode except check that <I>stream</I>
+is a valid open file.  Because the file system works in complete records, it would make no sense to flush an
+incomplete record in the JCC library.<p>
+
+If <I>stream</I> is in read mode, the last character pushed back on the stream is discarded if (and only if) it
+was not possible to push that character back into the actual read buffer.  This only happens when the buffer has
+progressed to a new track and an attempt to pushback the last character of the previous buffers content was made.
+This always allows at least two characters to be pushed back with the JCC library, since to progress to a new
+buffer content, at least one character must have been requested from that buffer.</P>
+
+read/write files will write out the currently updated data in the read for update handle.  To ensure all data
+is written from the buffers to disk, write zeros to fill the last block to force a commit of the primary
+buffers.  <a target="appl" href="fclose.htm">fclose</a> also performs this function in read/write files.<p>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="fclose.htm">fclose</a>,
+<a target="appl" href="_flushall.htm">_flushall</a>,
+<a target="appl" href="setbuf.htm">setbuf</a>,
+<a target="appl" href="setvbuf.htm">setvbuf</a>,
+<a target="appl" href="ungetc.htm">ungetc</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

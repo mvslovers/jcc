@@ -1,0 +1,162 @@
+<HTML>
+<HEAD>
+<TITLE>printf</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>printf</H2>
+
+<P>Formatted output to stdout.</P>
+
+<P><B>int printf (char * </B><I>format</I>[, <I>arguments</I>]<B>...);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns the number of characters printed.  -1 indicates an error. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>format</I></P>
+
+<P>&nbsp;&nbsp;The format control string</P>
+
+<P><I>arguments</I></P>
+
+<P>&nbsp;&nbsp;Optional arguments specifying replacement values</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>printf</B> function prints the <I>format</I> string to stdout, but also allows special characters
+to appear in the <I>format</I> string to specify that the next optional parameter should be used as the
+value to print.  Special characters start with a percent sign (<B>%</B>) and can contain flags to control how
+the variable argument is printed.  This is the form, and a list of supported special characters and options:</P>
+
+<B>%</B>[flags][width][<B>.</B>precision] [{<B>h</B> | <B>hh</B> | <B>l</B> | <B>ll</B> | <B>L</B>}]type<p>
+
+<code><pre>
+flags  description                             default
+------ --------------------------------------- ----------------------------------
+-      left align the field                    right align
+
++      if the field is a signed type use       only use a minus (-) when required
+       a plus (+) or minus (-) sign.
+
+0      add leading zeros to the output         no padding
+       until the minumum width is reached
+
+space  put space where a + would be printed    no space is printed
+
+#      alter the format as follows:
+       o x or X types have 0, 0x or 0X added
+       e E or f forces a decimal point to appear
+       g or G forces a decimal point, and no
+       truncation of trailing zeros.
+</pre></code>
+
+<B>width</B> specifies the minimum width in characters to use for the field being printed, where by default,
+blanks are added to the left of the field.  <B>width</B> never forces a field to be truncated.  <B>width</B>
+is specified by a positive number, but may be an asterix (<B>*</B>) in which case an <B>int</B> integer should
+appear in the argument list to specify the value required.<p>
+
+<B>precision</B> is an integer preceeded by a "<B>.</B>", or alternatively an asterix (<B>*</B>) like the
+<B>width</B> special case where an argument supplies the value.  It specifies:<p>
+
+<code><pre>
+Type              Meaning                           Default 
+----------------- --------------------------------- -----------------------------
+c                 The precision has no effect.      The character is printed.
+
+d, i, u, o, x, X  The precision specifies the       Default precision is 1. 
+                  minimum number of digits to be
+                  printed. Padding on the left
+                  with zeros as required.
+                  The value is not truncated when
+                  the number of digits exceeds
+                  precision.
+
+e, E              The precision specifies the       Default precision is 6;
+                  number of digits to be printed    if precision is 0 or the period
+                  after the decimal point.          appears without a number following
+                  The last printed digit is         it, no decimal point is printed.
+                  rounded.
+
+f                 The precision value specifies     Default precision is 6;
+                  the number of digits after the    if precision is 0 or the period
+                  decimal point. If a decimal       appears without a number following
+                  point appears, at least one       it, no decimal point is printed.
+                  digit appears before it.
+                  The value is rounded to the
+                  appropriate number of digits.
+
+g, G              The precision specifies the       Six significant digits are printed,
+                  maximum number of significant     with trailing zeros truncated.
+                  digits printed.
+
+s                 The precision specifies the       Characters are printed until a null
+                  maximum number of characters      terminating character is encountered.
+                  to be printed. Characters in
+                  excess of precision are not
+                  printed.
+
+</pre></code>
+
+The optional type specifiers are as follows:<p>
+
+<code><pre>
+h  = half, which results in a short integer being processed
+hh = half half, which results in a signed character being processed
+l  = long, which results in an long integer being processed
+ll = long long, which results in a long long integer being processed
+L  = long double, is ignored as that type is not supported in JCC.
+</pre></code>
+
+The only required value is the type which has the following character codes:<p>
+
+<code><pre>
+c = prints a character, which was extended to an int parameter
+d = signed decimal integer
+i = signed decimal integer
+o = unsigned octal integer
+u = unsigned decimal integer
+x = unsigned hexadecimal integer, using "abcdef"
+X = unsigned hexadecimal integer, using "ABCDEF"
+e = double, in the form: [-]d.ddde[+|-]ddd  (where d is a digit)
+E = same as e above, except the exponent uses "E" instead
+f = double, in the form: [-]ddd.ddd  (where d is a digit)
+g = chooses format e if the exponent value is less than -4 or
+    greater than the precision, otherwise format f is printed.
+    Trailing zeros are removed and the decimal only appears when required
+G = save as g above, except the exponent uses "E" instead (if required)
+n = pointer to integer, is used to store the number of printed characters so far
+p = pointer to void, an address is printed
+s = pointer to a character string, the string is printed
+% = a percent sign is printed, no argument is used
+</pre></code>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="fopen.htm">fopen</a>,
+<a target="appl" href="fprintf.htm">fprintf</a>,
+<a target="appl" href="fscanf.htm">fscanf</a>,
+<a target="appl" href="scanf.htm">scanf</a>,
+<a target="appl" href="sprintf.htm">sprintf</a>,
+<a target="appl" href="vprintf.htm">vprintf</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

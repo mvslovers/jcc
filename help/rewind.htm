@@ -1,0 +1,55 @@
+<HTML>
+<HEAD>
+<TITLE>rewind</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>rewind</H2>
+
+<P>Reposition to the start of an open file.</P>
+
+<P><B>void rewind (FILE * </B><I>stream</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>None.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>stream</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the open FILE structure</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>rewind</B> function repositions <I>stream</I> to the start of the file.</P>
+
+<B>rewind</B> clears both the error and End Of File indicators of <I>stream</I> but
+has no effect on streams that do not support seeking.<p>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="fgetpos.htm">fgetpos</a>,
+<a target="appl" href="fsetpos.htm">fsetpos</a>,
+<a target="appl" href="ftell.htm">ftell</a>,
+<a target="appl" href="_lseek.htm">_lseek</a>,
+<a target="appl" href="_tell.htm">_tell</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

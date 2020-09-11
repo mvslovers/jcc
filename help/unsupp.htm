@@ -1,0 +1,58 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>Unsupported parts of ANSI C.</center></h2>
+
+The following is a list of variables and functions that the JCC library does not support
+for one reason or another.  Future releases may include support for some of these functions.<p>
+
+<b>file access, but not applicable to MVS:</b><br>
+_fstat<br>
+_access<br>
+_chmod<br>
+_futime (sets modification time for an open file)<br>
+_stat<br>
+_umask<br>
+_utime (sets file modification time for a filename)<p>
+
+<b>file access:</b><br>
+_creat (see: <a target="appl" href="fopen.htm">fopen</a> and/or <a target="appl" href="_open.htm">_open</a>
+for more information on creating sequential files)<p>
+
+<b>temporary file access:</b> (due to dcb requirements, use <a target="appl" href="fopen.htm">fopen</a> and/or
+<a target="appl" href="_open.htm">_open</a>)<br>
+_mktemp<br>
+_rmtmp<br>
+_tempnam<br>
+tmpfile<br>
+tmpnam<p>
+
+DSN filenames starting with "&&" are created when opened for the first time, and deleted when the JCC compiled
+program ends.  1000 temporary files may be created in this way per JCC program, although only 256 files may
+be open at the same time.  Once a "//DSN:&&DSNAME" temporary file has been created, it may be opened and closed
+as many times as needed by the running program.  Unlike JCL, use the same filename to (re)access the same temporary
+file.<p>
+
+To use a temporary file with another program in the same address-space, you may obtain the internal DD name
+used for the temp file with the int __get_tmpddn (char * tmpnam, char * ddn9) function.  tmpnam would be "&&DSNAME"
+and ddn9 would be your char array (of length 9) to accept the resulting unpadded null-terminated ddname string.  The
+function returns 1 when a name was copied into your buffer, and 0 on failure to locate the file.<p>
+
+<b>locale-specific functions:</b><br>
+strcoll<br>
+stricoll<br>
+strncoll<br>
+strnicoll<br>
+strxfrm<p>
+
+<b>time variables/functions:</b><br>
+daylight<br>
+_ftime<br>
+_timezone<br>
+_tzname<br>
+_tzset<p>
+
+<font>
+</body>
+</html>

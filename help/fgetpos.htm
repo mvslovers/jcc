@@ -1,0 +1,58 @@
+<HTML>
+<HEAD>
+<TITLE>fgetpos</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>fgetpos</H2>
+
+<P>Record the current stream position.</P>
+
+<P><B>int fgetpos (FILE * </B><I>stream</I><B>, fpos_t * </B><I>pos</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;stdio.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>This function returns zero if the operation was successful. -1 indicates an error. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>stream</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the open FILE structure</P>
+
+<P><I>pos</I></P>
+
+<P>&nbsp;&nbsp;A pointer to the an fpos_t structure</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>fgetpos</B> function stores the current position of <I>stream</I> in a library specific
+structure which is to be used only with the function <a target="appl" href="fsetpos.htm">fsetpos</a>.</P>
+
+<P><A HREF="stdioh.htm">Stream I/O Routines</A></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="fseek.htm">fseek</a>,
+<a target="appl" href="fsetpos.htm">fsetpos</a>,
+<a target="appl" href="ftell.htm">ftell</a>,
+<a target="appl" href="_lseek.htm">_lseek</a>,
+<a target="appl" href="rewind.htm">rewind</a>,
+<a target="appl" href="_tell.htm">_tell</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

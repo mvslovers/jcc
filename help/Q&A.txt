@@ -1,0 +1,137 @@
+These common questions & answers may help getting started with the JCC for MVS C compiler.
+
+Q. I'm developing code with your product, do I need to pay you anything?
+A. No, but if you allow other people to run programs and have not made the
+   source code available on the Internet you need to re-read our agreement!
+
+Q. Does the software produced by JCC support newer operating systems?
+A. Yes.  There are no 24bit requirements in the JCC library which haven't been coded
+   specifically to work with different architectures.  Faster instructions are used
+   for common library functions when available/detected or when switched on manually.
+
+Q. What parameters can I pass to a JCC program?
+A. JCC allows up to 256 characters of command line parameter data to be processed by
+   the 'standard' args processor.  A normal MVS program however usually only allows
+   100 characters to be passed which may cause restrictions/problems.  Using short dd
+   names in the parameter string supplied to your JCC built program should help.
+
+   Both Batch and TSO style parameter lists are detected and decoded, VM uses a merged
+   token style paramter scan algorithm but should otherwise work too.  When passing a
+   parameter of exactly 8 characters in VM, split it using quotes.  (ie. "abcdefg h")
+
+Q. My files don't open, what's wrong?
+A. By default, DD names are assumed for file open methods.  There are a few ways to change
+   this default behaviour including a _style global variable.  The easiest way to work
+   with this issue is to specify "//DSN:" or "//HFS:" before your filenames.  This allows
+   the C programs produced by JCC to work well in both batch environments and TSO where DDs
+   have to be manually configured.  Filenames starting with a single "/" are considered HFS.
+
+Q. I'm still having trouble with files, what's going on in the library?
+A. Files are processed in text or binary mode and there are limitations
+   with each of these when compared to true ANSI standards.  (Not including HFS access.)
+
+   Text mode files should work well with Unix filesystem C programs since
+   this is the most compatible format the library supports (and is the default.)
+   Binary mode files are exactly that, in that they will read-back what is written
+   without any translation or thoughtful formatting.  Fixed Block also requires
+   the final file-length to be a multiple of the record length.
+
+   There are other modes available when reading-only or writing-only, and there is a
+   binary read/write mode which works with fixed size pages (of the blocksize.)
+   There are issues with extending files (not allowed for PDS members) and multiple
+   +b C file handles - eof records will be missing from the actual disk until closed.
+
+   To allow fine-control over open DCB structures, for possible passing to assembler
+   routines, there is a __getdcba get-address function.  Use with extreme care!
+
+Q. The floating-point numbers are sometimes different in the 17th digit of precision?
+A. JCC's internal assembler uses a different algorithm to produce constant floating-
+   point numbers than that of IFOX00.  The constants within the float.h include file
+   will produce identical results for any programs using either assembler.  The
+   printf output routine attempts to use the hardware to produce accurate results.
+
+Q. What's the hint which is displayed when compiling-to-object is switched on?
+A. The internal assembler counts the distance in bytes of the farthest reference and
+   calculates an estimate of the -z page size override allowed by the compiler.
+   (The value should normally be kept at or under 28000 as a general rule.)
+   If it still doesn't make sense: lower the value until the program assembles and works.
+
+Q. Why are my programs so big?  The same program in OS1, 2 and 3 is much smaller?
+A. JCC programs are fully self-contained and do not load multi-megabyte dlls
+   to support library functions.  There is also alot of waste in the .obj format used.
+
+Q. I'm not a WinPC person, what's the story with running JCC on other platforms?
+A. The MVS and Linux86 versions have been updated to the latest Win. level and
+   will be kept in sync. in all future releases.  The MVS version should run without too
+   much setting up on a older or newer system, a single library object member name needs
+   to be truncated from 9 to 8 characters length but prelink also opens it that way.
+   Prelink needs to be built using the PC prelink before first real use of JCC on MVS.
+   
+   There is a liblst member in each of the two JCC object libraries, this member must
+   be moved in text-translation mode from ASCII to EBCDIC so the MVS prelinker can read
+   it.  Note: each of the libraries has a slightly different version of liblst.txt.
+   
+   Library object datasets for both rent and non-rent objects should be defined as FB80.
+
+Q. I'm having problems when I compile on MVS systems, nothing works?
+A. Use VB8188/8192 for JCC temporary files and include files - possibly source files too.
+   JCC text mode file operations work more efficently and more compatibly this way.
+   Codepage 1047 is used internally in the compiler and may cause [ and ] bracket issues.
+   //DDN:JCCOUTPT is the temp file, //DDN:JCCINCS user files, //DDN:JCCOASM output.
+   To use the library, -I//DDN:JCCINCL should be used and defined to the headers PDS.
+   -IJCCINCL is a shorter version, the input file needs to be specified in the parameters.
+   Use -fcode=name to change your different objects CSECT names as filename is unreliable.
+
+Q. My prelink step says there are problems with missing names or too many names?
+A. You are probably defining an external name which conflicts with library names,
+   or have just forgotten to define an external in your own code somewhere.  Rename your
+   variables, or use static declarations on vars/funcs for too-many external names.
+   An already prelinked object prelinked again will cause many duplicate name errors and
+   isn't supported by JCC at all.
+
+Q. I compile and prelink without any errors, but the program doesn't work on my system?
+A. Did you ask the prelinker to translate long external entries to short ones?
+   Did you transfer the object to MVS using binary mode, into an FB80 object dataset?
+   Have you linked with NORENT as the options in the linkage editor/binder?
+   Have you ALLOCated FI(stdout) DA(*) under TSO to see any generated output?
+   Is the TSO full-screen handling routine updated from http://www.prycroft6.com.au/ ?
+   Some (weak) unresolved externals are allowed, try the program anyway.
+   Have you allocated MVS memory for your region which supports the default 512K+ required?
+   Although included as an object record, the ENTRY is always offset 0 in JCC programs.
+
+Q. My program bombs out, what should I try?
+A. Assemble with a real assembler first!  and in NORENT mode...  Does it work any better?
+   Have a look at the new assembler-map to see where the program is failing.
+   Is the generated assembler wrong?  Is the program logic in error?  Does debug help?
+   Try it on another compiler/host-os with an intergrated debugger - is the C good?
+
+Q. Debugging doesn't work - hows it supposed to go? or the Debugger just sits there?
+A. The Console/GUI debuggers need to be running and waiting before the MVS program starts.
+   Compile steps (possibly multiple) and prelink step must refer to the same -test file.
+   The IP is configurable using a variable called debug_server (default="127.0.0.1:2039")
+   The Console/GUI *port* number cannot be changed.  Is the TCP/IP system working properly?
+   You cannot use JCC-MVS -test output with the PC debuggers.
+
+Q. I have a program which uses a constant struct length and not a sizeof - is this bad?
+A. Some compilers pack structures, some pad them including JCC.  Some programs try to
+   match a given file format with structs only to fail due to the padding differences.
+   The char type never creates any padding in JCC, but other larger types always do.
+
+Q. Where did ASMSCAN/OBJSCAN come from, what are used for now?
+A. There were designed to allow the old IFOX00 assembler to use long-names and ignore
+   31bit assembler directives generated by JCC.  If for any reason the internal assembler
+   stops working, they can be used to reliably assemble JCC output for tests/release.
+   Under a small MVS system, these 2 steps may be needed for large compile/assembles to work.
+
+Q. I'm thinking of optimising using -fstk are there any issues?
+A. -fstk applies to all the functions within the current file being compiled.  Only 4K of
+   additional space is available in each stack so recursion is out of the question.  But for
+   small functions in seperate source files which neither call other functions nor use
+   large amounts of stack-space (local variables) there shouldn't be any problems (ABENDS.)
+
+Q. I'm trying to use 'long long' datatypes and my constants are producing compiler warnings?
+A. Use LL and ULL on the end of constants which defines them as 64bits in length.
+
+Q. Some of the header files contain the "long long" datatype and are producing warnings on
+   the highest sensitivity?
+A. The warning '[unsigned] long long int' is a non-ANSI type  can be ignored in JCC.

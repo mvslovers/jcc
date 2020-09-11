@@ -1,0 +1,85 @@
+<HTML>
+<HEAD>
+<TITLE>WaitForMultipleEvents</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>WaitForMultipleEvents</H2>
+
+<P>Suspend execution until one-of or all multiple events are signalled.</P>
+
+<P><B>int WaitForMultipleEvents (int </B><I>Count</I><B>, EVENT * </B><I>arr</I><B>, int </B><I>WaitAll</I><B>, int </B><I>ms</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;process.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>WAIT_FAILED is returned and errno set to the specific reason on failures.  WAIT_TIMEOUT is returned if
+<b>EVENT</b>s were not signalled by the time specified.  WAIT_OBJECT_0 + instance is returned if an <b>EVENT</b>
+was already signalled or was signalled within the time limit specified, where instance is the lowest index
+of an <b>EVENT</b> in the array that is found to be signalled.  In the case of a wait <b>ALL</b> instance
+will always be 0 if no timeout occured.</P>
+
+<P><B>Parameters</B></P>
+
+<P><I>Count</I></P>
+
+<P>&nbsp;&nbsp;The number of <b>EVENT</b>s that are in the array to be tested.</P>
+
+<P><I>arr</I></P>
+
+<P>&nbsp;&nbsp;The <b>EVENT</b> object array-list to wait on.</P>
+
+<P><I>WaitAll</I></P>
+
+<P>&nbsp;&nbsp;Specify non zero to wait until all the <b>EVENT</b>s are signalled before returning.</P>
+
+<P><I>ms</I></P>
+
+<P>&nbsp;&nbsp;The length of time to wait in milliseconds, use <b>INFINITE</b> for no time limit.</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>WaitForMultipleEvents</B> function suspends execution of the calling thread if an <b>EVENT</b>
+object is not currently signalled.  The thread will wake up if the <b>EVENT</b> is signalled with the
+<b>SetEvent</b> function, or if the <b>CloseEvent</b> function is called for the <b>EVENT</b>s passed in the
+parameter array list.  The thread will also wake up if the time limit expires before an <B>EVENT</B> is signalled.</P>
+
+The <b>CloseEvent</b> function will release all threads waiting on an <b>EVENT</b>
+as long as it is not waiting on <b>ALL</b> events.  The process will deadlock
+if you try to close an <b>EVENT</b> object while another thread is waiting on multiple <b>EVENT</b>s,
+including the one being closed, where the one being closed is not the only <b>EVENT</b> non-signalled in the wait.</P>
+
+<b>Note:</b><br>
+When a Wait-Multiple function call is made for <b>ALL</b> events in a list, the function waits until
+the signalled state of all <b>EVENTS</b> is set even if some <b>EVENT</b>s have changed state multiple
+times while waiting.</P>
+
+<P><a target="appl" href="processh.htm">Process and Threads</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="_beginthread.htm">_beginthread</a>,
+<a target="appl" href="_endthread.htm">_endthread</a>,
+<a target="appl" href="_syncthread.htm">_syncthread</a>,
+<a target="appl" href="CreateEvent.htm">CreateEvent</a>,
+<a target="appl" href="ResetEvent.htm">ResetEvent</a>,
+<a target="appl" href="SetEvent.htm">SetEvent</a>,
+<a target="appl" href="EventStatus.htm">EventStatus</a>,
+<a target="appl" href="WaitForSingleEvent.htm">WaitForSingleEvent</a>,
+<a target="appl" href="CloseEvent.htm">CloseEvent</a>
+</P>
+
+</font>
+</BODY>
+</HTML>

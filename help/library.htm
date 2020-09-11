@@ -1,0 +1,221 @@
+<html>
+<body>
+<font face="verdana,arial,helvetica" size="2">
+
+<h2><center>JCC Library.</center></h2>
+
+The JCC Library is a multi-threading enabled, ANSI compliant library which is designed for
+use with the JCC Compiler (and with other compatible compilers in single-threaded mode<small>*</small>.)<p>
+
+The JCC Library implements a segment based C Stack, where segments are allocated as required
+based on the current request size plus the initial Stack size.  Segments are not freed until
+the termination of the program, but will be reused when and if a new request can be satisfied
+by the current allocations.  There is a 4K guard automatically added to the end of each Stack
+segment which allows the library functions to bypass Stack fault checks.  See the
+<a target="appl" href="compiler.htm">JCC Compiler</a> section for more information on the
+argument for function entry and Stack-fault check bypassing.<p>
+
+When a JCC compiled program starts, stdin, stdout and stderr are opened automatically by the library
+if the I/O routines have been linked with the main program.  A set of command line parameters may
+override the default DD names used for each of these files: (The default filenames are shown here)
+
+<code><pre>userprog cmdop1 cmdop2 &lt;//DDN:STDIN
+userprog cmdop1 cmdop2 &gt;//DDN:STDOUT
+userprog cmdop1 cmdop2 &gt;&gt;//DDN:STDERR
+</pre></code>
+
+Notice there is no space between &lt; or &gt; and the filename specified, and the options are listed
+after all other user options.  Any combination of the three special parameters may be used.  These
+options are especially important when a JCC program executes another JCC program.<p>
+
+The following extern variable may be defined to override Library defaults:<p>
+
+<b>__init_stack_size :</b><br>
+Initial allocation for the C Stack.  Min: 8K, Default: 256K, Max: 1GB<br>
+New Stack segments are allocated automatically when required (using this size + current request.)<p>
+
+The following function may be written to enhance the Library operation:<p>
+
+<b>__load_env :</b><br>
+Optional parameterless user routine to read //DDN:STDENV or similar to fill the environment
+buffer with defaults.  A return value != 0 terminates execution before main (); is called.
+<a target="appl" href="_putenv.htm">_putenv</a> (which creates <a target="appl" href="_environ.htm">_environ</a>,
+an external declared in @crt0) should be used by __load_env.<p>
+
+The following variables may be modified to suit the running programs requirements:<p>
+
+<b>_style :</b><br>
+points to "//DDN:" = The default style for filenames. (type: char *)<p>
+
+Valid overrides are: "//DSN:", "//HFS:" and "//MEM:".<p>
+
+(See the history page for details on the "//NFL:" style which is another valid override on a Hercules machine
+that grants access to the host file system.)<p>
+
+
+<b><a target="appl" href="_fmode.htm">_fmode</a> :</b><br>
+set to _O_TEXT = The default for [f]open. (type: integer)  Note that HFS files access does not interpret
+the mode of a JCC file, all operations assume a simple stream of bytes for OMVS calls.<p>
+
+<b>__dd_name :</b><br>
+char [4] = "JCC";  may be changed to generate unique DD names when //DSN: style files are opened
+(DDs are currently generated as "JCC00nnn", where nnn is <a target="appl" href="_fileno.htm">_fileno</a>.)
+If multiple JCC programs need to run concurrently in the same address space, and they open user-files,
+then this string should be changed in the subsequent JCC programs to prevent duplicate DD names being defined.<p>
+
+<b>New</b> JCC library processing attempts to find a unique DD name by trying up to 99 different values of xx in
+"JCCxxnnn", where xx is from "01" to "99".  The temporary DD names are now generated in a similar fashion, where
+"JCCxxnnn" is altered to "JTPxxnnn".  Previously, temp. DD names were "JCCTPnnn" but this is no longer the case.<p>
+
+<b>__subtask :</b><br>
+char [9] = "SUBTSKxx";  where xx is a system generated hexadecimal value; the "SUBTSK" part may be changed
+to a unique alphanumeric string of length 6 when one multi-threaded JCC program launches another (since
+the operating system will not allow multiply defined system symbols.)<p>
+
+<b>New</b> JCC library processing attempts to find a unique Sub-Task identifier when "SUBTSKxx" is not unique, by
+changing n in "SUBTSnxx" to a value from "0" to "9" before finally failing to create a new thread.<p>
+
+<b>__libc_arch :</b><br>
+Zero for system/370 mode (non optimised) or 2=OS/390,3=z/OS. (type: integer)<p>
+
+If running Hercules in system/370 mode, with ESA/390 extensions enabled, then programmatically set
+this variable to 1 to enable internal library optimisations for faster program execution.<p>
+
+It would be wise to allow the user the option to select this based on a command-line parameter.<p>
+
+If expanded memory is detected in an MVS 3.8j system this variable is automatically set to 1.<p>
+
+<b>__libc_oarch</b> is an internally used mode for OS functions, and shouldn't be referenced
+or modified by any user program.  This is a copy of the original __libc_arch above.<p>
+
+<b>__libc_ussok</b> is set to 1 if the OS supports OMVS calls that JCC uses to access HFS files.<p>
+
+<b>__libc_noexp</b> initialised as 1: prevents the runtime from checking for and using additional memory
+installed on a MVS 3.8j system above the 16MB line.<p>
+
+Weak-External so it must be defined in assembler or an otherwise empty non-rent '.c'
+file object.<p>
+
+<b>__libc_expmem</b> (normally 0) is set to 1 if the additional MVS 3.8j memory is found and used.<p>
+
+<b>__libc_mode</b> is the address mode upon entry (0=24 bit, 1=31 bit - do not change this
+variable.)<p>
+
+This variable controls which type of memory allocation routine is used (and if
+the value is changed, freeing already-allocated memory may not operate correctly.)<p>
+
+The variable may be tested for any other purpose.<p>
+
+An MVS 3.8j system with expanded memory that is detected by JCC will cause the JCC program to enter AMODE 31 automatically
+and return to AMODE 24 before the program ends.  Calls to other programs also switch back and forth to AMODE 24 as required.
+This variable is always set to 0 in MVS 3.8j however.<p>
+
+<b>__libc_heap_used</b> keeps track of the number of bytes allocated using the malloc library functions.<p>
+
+<b>__libc_heap_max</b> keeps track of the highest total number of bytes allocated using the malloc library functions.<p>
+
+<b>__libc_stack_used</b> keeps track of the number of bytes allocated for stack use by the library functions.<p>
+
+<b>__libc_stack_max</b> keeps track of the highest total number of bytes allocated for stack use by the library functions.<p>
+
+<b>__jcc_rtab_size</b> controls the rent-object-slot table size, for dynamic objects only.<p>
+
+Weak-External so it must be defined in assembler or an otherwise empty non-rent '.c'
+file object.  The default value is 1024 if the dynamic loader is present which matches
+the number of slot positions a standard rent object can be assigned to, or else the prelinker defined
+number of rent-data objects included is used.  Each new thread also gets its own copy
+of this table.  To use slots above the 1024 limit the <a target="appl" href="compiler.htm">compiler<a/>
+<b>-renteprl</b> flag should be employed to allow the dynamic loader extra space needed for addressing
+a larger table, and which increases each function's prologue by 1 to 3 instructions (or 10 bytes.)<p>
+
+<b>__jcc_FD_SETSIZE</b> controls the initialisation of sockets to allow a user-supplied value for the
+maximum number of socket descriptiors (which overrides the library default value of 256.)<p>
+
+int __jcc_FD_SETSIZE = 256; is defined as an external rent variable in the socket.obj object. Its value
+should be altered (if required) before any socket calls are made.<p>
+
+<B>Notes:</B><p>
+
+<a target="appl" href="_alloca.htm">_alloca</a>
+cannot create a new Stack segment or use space in an existing Stack segment which is not the one
+currently being used by the function calling _alloca.  This means _alloca may not return the entire
+amount of Stack which is allocated and free (ie. a Stack segmentation limitation.)  Enlarge the initial
+stack size if <B>NULL</B> is returned by _alloca as a result of insufficient space available.<p>
+
+<u>Stack segment map (technical description):</u>
+
+<pre><code>Base:[0][4][8][12][16...]
+
+0:ialloca function address (for Stack expansion.)
+4:End of this Stack address (start of Guard.)
+8:Next Stack segment linked (or NULL.)
+12:Position of stack-list head (for this thread.)
+16:RENT object data-offset table pointer
+20:Actual RENT data + Offset Table if any...
+20:First (of a possible many) R13 Stack locations...
+
+R13:[0][4][8][12...]
+
+0:Base pointer (copied on every Stack expansion.)
+4:Last R13
+8:Next R13
+12:Registers until 72:
+72:FP0 reserved-space
+80:Current RENT data-offset pointer
+84:Locals...
+
+ialloca: (internal alloca function)
+
+R2 =Next stack-area free-space pointer
+R10=ialloca entry address
+R11=Return Location -6/-4 (*[short,]long for Stack-requirements.)
+R12=Base pointer value for the Stack segment being used
+R13=Current Stack allocation, registers already saved.
+R14=Return to original calling function
+R15=Start of newly called function
+
+If ialloca can't allocate memory, print - (stderr, "Stack fault, ENOMEM\n"),
+then exit(16).
+</code></pre>
+
+<hr>
+
+<small>
+Info: when passing a void * to a new thread, don't use caller-local-storage, unless the
+caller is not going to end before the new thread does...  Doing so may cause the values passed
+to become invalid before the new thread has a chance to use them.<p>
+
+<hr>
+
+Other compilers may or may not work in multi-threading mode, the difference is the way variables
+are treated by the different code-generators.  Some optimising compilers keep variables in
+registers, and whilst this provides a speed advantage, multi-threading can suffer by keeping
+those values out of main storage and hence unavailable to other running threads.  <b>JCC</b>
+only uses registers for temporary variables, non-addressed locals and locals with register class.<p>
+
+<hr>
+
+<u>Non-Thread-Safe variables available in the library.</u><br>
+The user must establish a Critical Section around the use of:
+(if used by more than one thread)<br><br>
+
+struct hostent * hp;
+&nbsp;&nbsp;(<a target="appl" href="socketsh.htm">Sockets</a> - returned by: gethostbyname - defined in EZASOKET)<p>
+
+<hr>
+
+<b><a target="appl" href="_syncthread.htm">_syncthread</a></b> signals the termination of the
+thread resources, it doesn't have to be used, but without it, thread slots will not be made
+available for future use by the current program.  There is a limit of 256 thread slots per program.<p>
+
+The return code passed from _syncthread is a signed 30 bit integer, which is sign-extended to 32 bits.<p>
+
+<hr>
+
+IBM, System/370, ESA/390, and z/Architecture are trademarks or registered trademarks of IBM Corporation.
+
+</small>
+
+<font>
+</body>
+</html>

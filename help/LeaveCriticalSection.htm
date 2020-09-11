@@ -1,0 +1,50 @@
+<HTML>
+<HEAD>
+<TITLE>LeaveCriticalSection</TITLE>
+</HEAD>
+<BODY>
+
+<font face="verdana,arial,helvetica" size="2">
+<H2>LeaveCriticalSection</H2>
+
+<P>Give up ownership of a critical section object.</P>
+
+<P><B>void LeaveCriticalSection (LPCRITICAL_SECTION </B><I>lock</I><B>);</B></P>
+
+<TABLE border=1 cellpadding=5 cols=1 frame=below rules=rows>
+
+<TR VALIGN="top">
+<TD width=100%><B>Required Header</B></TD>
+</TR>
+
+<TR VALIGN="top">
+<TD width=100%>&lt;process.h&gt;</TD>
+</TR>
+
+</TABLE><BR>
+
+<P><B>Return Value</B></P>
+
+<P>None. </P>
+
+<P><B>Parameters</B></P>
+
+<P><I>lock</I></P>
+
+<P>&nbsp;&nbsp;Pointer to a critical section object</P>
+
+<P><B>Remarks</B></P>
+
+<P>The <B>LeaveCriticalSection</B> function returns ownership of the critical section pointed to by <I>lock</I>,
+so other threads may be released from their waiting condition and obtain ownership of the critical section object.</P>
+
+<P><a target="appl" href="processh.htm">Process and Threads</a></P>
+
+<P><B>See Also</B>&nbsp;&nbsp;&nbsp;
+<a target="appl" href="EnterCriticalSection.htm">EnterCriticalSection</a>,
+<a target="appl" href="InitialiseCriticalSection.htm">InitialiseCriticalSection</a>
+</P>
+
+</font>
+</BODY>
+</HTML>
