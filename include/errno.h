@@ -8,7 +8,6 @@
 
 #ifndef __ERRH
 #define __ERRH /* Prevent multiple includes */
-#endif
 
 /* file-system */
 #define ENOENT          2         /* No such file or directory */
@@ -76,3 +75,4 @@ extern long athreadid (void);
 extern int  __errno;
 #define errno (((int*)&__errno)[athreadid()])
 
+#endif
